@@ -59,7 +59,7 @@ export default async function Image() {
             borderRadius: '999px',
           }}
         >
-          ChatGPT・Claude・Gemini対応 ｜ 96種類を無料公開
+          ChatGPT・Claude・Gemini対応 ｜ 豊富なプロンプトを無料公開
         </div>
       </div>
     ),

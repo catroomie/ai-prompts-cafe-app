@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
+import { LanguageProvider } from '@/lib/LanguageContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
 const SITE_URL = 'https://ai-prompts-cafe-app.vercel.app'
 const SITE_NAME = 'AI Prompts Cafe'
 const SITE_TITLE = '無料AIプロンプト集｜ChatGPT・Claude・Gemini対応 | AI Prompts Cafe'
-const SITE_DESC = 'ChatGPT・Claude・Geminiで使えるAIプロンプトを96種類無料公開。SNS投稿・デザイン・マーケティング・美容・ライティング・コードまで対応。コピペで即使える実用プロンプト集。'
+const SITE_DESC = 'ChatGPT・Claude・Geminiで使えるAIプロンプトを無料公開。SNS投稿・デザイン・マーケティング・美容・ライティング・コードまで対応。コピペで即使える実用プロンプト集。'
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: `無料AIプロンプト集 | ${SITE_NAME}`,
-    description: 'ChatGPT・Claude・Geminiで使えるAIプロンプトを96種類無料公開。コピペで即使える。',
+    description: 'ChatGPT・Claude・Geminiで使えるAIプロンプトを無料公開。コピペで即使える。',
   },
   robots: {
     index: true,
@@ -51,8 +52,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <Header />
-        <main>{children}</main>
+        <LanguageProvider>
+          <Header />
+          <main>{children}</main>
+        </LanguageProvider>
       </body>
     </html>
   )

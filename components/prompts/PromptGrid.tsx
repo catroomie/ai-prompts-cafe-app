@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, useCallback } from 'react'
+import { useLang } from '@/lib/LanguageContext'
 import type { Prompt } from '@/lib/types'
 import PromptCard from './PromptCard'
 import PromptModal from './PromptModal'
@@ -14,7 +15,7 @@ interface Props {
 }
 
 export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
-  const [lang, setLang] = useState<'ja' | 'en'>('ja')
+  const { lang } = useLang()
   const [category, setCategory] = useState<string>('all')
   const [search, setSearch] = useState('')
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE)
@@ -65,7 +66,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
           無料AIプロンプト集｜ChatGPT・Claude・Gemini対応
         </h1>
         <p className="text-sm" style={{ color: 'var(--subtext)' }}>
-          コピペで即使えるプロンプトを96種類無料公開中
+          豊富なプロンプトをコピペで即使える
         </p>
       </section>
 

@@ -3,13 +3,14 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { useLang } from '@/lib/LanguageContext'
 import type { User } from '@supabase/supabase-js'
 
 type ToastType = 'logout' | 'lang-en' | 'lang-ja' | null
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)
-  const [lang, setLang] = useState<'ja' | 'en'>('ja')
+  const { lang, setLang } = useLang()
   const [toast, setToast] = useState<ToastType>(null)
   const [langAnimating, setLangAnimating] = useState(false)
   const supabase = createClient()
@@ -36,11 +37,9 @@ export default function Header() {
   const handleLangToggle = () => {
     setLangAnimating(true)
     setTimeout(() => {
-      setLang(l => {
-        const next = l === 'ja' ? 'en' : 'ja'
-        showToast(next === 'en' ? 'lang-en' : 'lang-ja')
-        return next
-      })
+      const next = lang === 'ja' ? 'en' : 'ja'
+      setLang(next)
+      showToast(next === 'en' ? 'lang-en' : 'lang-ja')
       setLangAnimating(false)
     }, 120)
   }
@@ -59,8 +58,6 @@ export default function Header() {
             ☕ AI Prompts Cafe
           </Link>
           <div className="flex items-center gap-3">
-
-            {/* 言語切り替えボタン */}
             <button
               onClick={handleLangToggle}
               className="relative text-sm px-3 py-1 rounded-full border font-medium cursor-pointer select-none"
