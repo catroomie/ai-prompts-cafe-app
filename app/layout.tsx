@@ -42,6 +42,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
+  icons: {
+    apple: '/apple-touch-icon.png',
+  },
   appleWebApp: {
     capable: true,
     title: 'AI Prompts Cafe',
