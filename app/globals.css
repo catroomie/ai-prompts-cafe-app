@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #fafaf8;
-  --text: #1a1a1a;
-  --subtext: #6b6b6b;
-  --accent: #c8704a;
+  --bg: #f9f9f9;
+  --text: #111111;
+  --subtext: #666666;
+  --accent: #c8704a;        /* ボタン・リンクのみに使用 */
   --accent-hover: #b05e3a;
   --card-bg: #ffffff;
-  --border: #e8e4e0;
-  --tag-bg: #f0ece8;
+  --border: #e5e5e5;
+  --tag-bg: #f4f4f4;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
   --radius: 12px;

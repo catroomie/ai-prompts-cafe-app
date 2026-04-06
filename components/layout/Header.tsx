@@ -54,7 +54,7 @@ export default function Header() {
     <>
       <header style={{ background: 'var(--card-bg)', borderBottom: '1px solid var(--border)' }} className="sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
-          <Link href="/" className="font-bold text-lg" style={{ color: 'var(--accent)' }}>
+          <Link href="/" className="font-bold text-lg" style={{ color: 'var(--text)' }}>
             ☕ AI Prompts Cafe
           </Link>
           <div className="flex items-center gap-3">
@@ -87,7 +87,7 @@ export default function Header() {
 
             {user ? (
               <div className="flex items-center gap-2">
-                <Link href="/mypage" className="text-sm font-medium" style={{ color: 'var(--accent)' }}>
+                <Link href="/mypage" className="text-sm font-medium" style={{ color: 'var(--text)' }}>
                   マイページ
                 </Link>
                 <button

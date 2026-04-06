@@ -59,7 +59,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
     <div>
       {/* ① ヒーロー：タイトル・説明のみ（コーヒーボタン削除） */}
       <section
-        style={{ background: 'linear-gradient(135deg, #fff5f0 0%, #ffeee6 100%)', borderBottom: '1px solid var(--border)' }}
+        style={{ background: 'var(--card-bg)', borderBottom: '1px solid var(--border)' }}
         className="py-10 px-5 text-center"
       >
         <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
@@ -120,7 +120,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                 <div
                   key="cta-inline"
                   className="col-span-full rounded-xl p-6 text-center flex flex-col items-center gap-3"
-                  style={{ background: 'linear-gradient(135deg, #fff5f0 0%, #ffeee6 100%)', border: '1.5px solid #f0c4aa' }}
+                  style={{ background: 'var(--tag-bg)', border: '1px solid var(--border)' }}
                 >
                   <p className="font-bold" style={{ color: 'var(--text)' }}>無料で使えるプロンプト20個を今すぐ受け取る</p>
                   <p className="text-sm" style={{ color: 'var(--subtext)' }}>＋毎週使えるプロンプトを配信</p>
@@ -157,7 +157,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
           <div className="mt-12 mb-4">
             <div
               className="rounded-2xl p-8 flex flex-col sm:flex-row gap-6 items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #fff5f0 0%, #ffeee6 100%)', border: '1px solid #f0c4aa' }}
+              style={{ background: 'var(--tag-bg)', border: '1px solid var(--border)' }}
             >
               {/* メール登録 */}
               <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left flex-1">
@@ -176,7 +176,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
               </div>
 
               {/* 区切り */}
-              <div className="hidden sm:block w-px self-stretch" style={{ background: '#f0c4aa' }} />
+              <div className="hidden sm:block w-px self-stretch" style={{ background: 'var(--border)' }} />
 
               {/* Buy Me a Coffee */}
               <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left flex-1">
