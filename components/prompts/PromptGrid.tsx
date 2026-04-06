@@ -33,6 +33,7 @@ const t = {
     newsletter: 'メールマガジン',
     buyMeCoffee: 'Buy Me a Coffee',
     about: 'About',
+    terms: '利用規約',
     contact: 'Contact',
     privacy: 'プライバシーポリシー',
     copyright: '© 2026 AI Prompts Cafe. All rights reserved.',
@@ -60,6 +61,7 @@ const t = {
     newsletter: 'Newsletter',
     buyMeCoffee: 'Buy Me a Coffee',
     about: 'About',
+    terms: 'Terms of Use',
     contact: 'Contact',
     privacy: 'Privacy Policy',
     copyright: '© 2026 AI Prompts Cafe. All rights reserved.',
@@ -298,8 +300,9 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
             <div className="flex flex-col gap-2">
               <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>Info</p>
               <a href="/about" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.about}</a>
-              <a href="/contact" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.contact}</a>
+              <a href="/terms" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.terms}</a>
               <a href="/privacy" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.privacy}</a>
+              <a href="/contact" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.contact}</a>
             </div>
           </div>
         </div>

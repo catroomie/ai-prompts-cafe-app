@@ -7,20 +7,44 @@ export default function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-5 py-12">
       <div className="mb-8">
-        <Link href="/" className="text-sm hover:underline" style={{ color: 'var(--subtext)' }}>← Back</Link>
+        <Link href="/" className="text-sm hover:underline" style={{ color: 'var(--subtext)' }}>← トップに戻る</Link>
       </div>
-      <h1 className="text-2xl font-bold mb-6" style={{ color: 'var(--text)' }}>About</h1>
-      <div className="flex flex-col gap-6 text-sm leading-relaxed" style={{ color: 'var(--subtext)' }}>
-        <p>
-          <strong style={{ color: 'var(--text)' }}>AI Prompts Cafe</strong> is a free library of AI prompts for ChatGPT, Claude, and Gemini.
-        </p>
-        <p>
-          We curate practical, copy-and-use prompts across categories like SNS, design, marketing, beauty, writing, business, and code — so you can get more done with AI, faster.
-        </p>
-        <p>
-          New prompts are added regularly. Subscribe to our newsletter to get fresh picks delivered to your inbox every week.
-        </p>
-        <div className="pt-4">
+
+      <h1 className="text-2xl font-bold mb-8" style={{ color: 'var(--text)' }}>About</h1>
+
+      <div className="flex flex-col gap-8 text-sm leading-relaxed" style={{ color: 'var(--subtext)' }}>
+        <section>
+          <h2 className="text-base font-semibold mb-3" style={{ color: 'var(--text)' }}>AI Prompts Cafeとは</h2>
+          <p>
+            ChatGPT・Claude・Geminiなど主要なAIツールですぐに使えるプロンプトを無料で公開しているサービスです。
+            SNS・デザイン・マーケティング・美容・ライティング・ビジネス・コードなど幅広いカテゴリに対応しており、
+            コピペで即使えるプロンプトを厳選して掲載しています。
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-base font-semibold mb-3" style={{ color: 'var(--text)' }}>運営について</h2>
+          <p>
+            本サービスは個人が運営しています。AIをもっと手軽に・実用的に使いたいという思いから立ち上げました。
+            プロンプトは定期的に追加・更新しています。
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-base font-semibold mb-3" style={{ color: 'var(--text)' }}>使い方</h2>
+          <ol className="list-decimal list-inside flex flex-col gap-2">
+            <li>カテゴリまたは検索でプロンプトを探す</li>
+            <li>「開く」でプロンプト全文を確認する</li>
+            <li>コピーしてChatGPT・Claude・Geminiに貼り付けて使う</li>
+            <li>アカウント登録でお気に入りを保存できる</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 className="text-base font-semibold mb-3" style={{ color: 'var(--text)' }}>ニュースレター</h2>
+          <p className="mb-4">
+            毎週、厳選プロンプトをメールでお届けしています。無料で登録できます。
+          </p>
           <a
             href="https://ai-prompts-cafe.beehiiv.com/subscribe"
             target="_blank"
@@ -28,9 +52,9 @@ export default function AboutPage() {
             className="inline-block px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80"
             style={{ background: 'var(--accent)' }}
           >
-            Subscribe to the newsletter →
+            無料で登録する →
           </a>
-        </div>
+        </section>
       </div>
     </div>
   )
