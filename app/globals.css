@@ -20,10 +20,10 @@ body {
   font-family: 'Inter', 'Noto Sans JP', sans-serif;
 }
 
-.category-SNS { background: #eff6ff; color: #3b82f6; }
-.category-Design { background: #f5f3ff; color: #8b5cf6; }
-.category-Marketing { background: #ecfdf5; color: #10b981; }
-.category-Beauty { background: #fdf2f8; color: #ec4899; }
-.category-Writing { background: #fff7ed; color: #f97316; }
-.category-Business { background: #f9fafb; color: #6b7280; }
-.category-Code { background: #f0fdf4; color: #22c55e; }
+.category-SNS { background: #f0f3fa; color: #5b78b8; }
+.category-Design { background: #f2f0f8; color: #7060a8; }
+.category-Marketing { background: #f0f5f2; color: #3a8060; }
+.category-Beauty { background: #f8f0f5; color: #a05080; }
+.category-Writing { background: #f8f3ee; color: #a06030; }
+.category-Business { background: #f3f3f3; color: #777777; }
+.category-Code { background: #f0f5f1; color: #3a8050; }

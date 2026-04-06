@@ -32,6 +32,9 @@ const t = {
     footerLinks: 'リンク',
     newsletter: 'メールマガジン',
     buyMeCoffee: 'Buy Me a Coffee',
+    about: 'About',
+    contact: 'Contact',
+    privacy: 'プライバシーポリシー',
     copyright: '© 2026 AI Prompts Cafe. All rights reserved.',
   },
   en: {
@@ -56,6 +59,9 @@ const t = {
     footerLinks: 'Links',
     newsletter: 'Newsletter',
     buyMeCoffee: 'Buy Me a Coffee',
+    about: 'About',
+    contact: 'Contact',
+    privacy: 'Privacy Policy',
     copyright: '© 2026 AI Prompts Cafe. All rights reserved.',
   },
 }
@@ -88,6 +94,13 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
 
   const displayed = filtered.slice(0, displayCount)
   const hasMore = displayCount < filtered.length
+
+  const relatedPrompts = useMemo(() => {
+    if (!selectedPrompt) return []
+    return prompts
+      .filter(p => p.category === selectedPrompt.category && p.id !== selectedPrompt.id)
+      .slice(0, 3)
+  }, [selectedPrompt, prompts])
 
   const handleFavoriteChange = useCallback((promptId: string, isFav: boolean) => {
     setFavoriteIds(prev => {
@@ -122,9 +135,16 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         </p>
       </section>
 
-      {/* ② 検索 + フィルター + カード一覧 */}
-      <div className="max-w-6xl mx-auto px-5 py-5">
-        <div className="flex flex-col gap-3 mb-5">
+      {/* ② 検索 + フィルター（sticky） */}
+      <div
+        className="sticky z-40 px-5 py-3"
+        style={{
+          top: '56px', /* header h-14 = 56px */
+          background: 'var(--bg)',
+          borderBottom: '1px solid var(--border)',
+        }}
+      >
+        <div className="max-w-6xl mx-auto flex flex-col gap-2">
           <input
             type="text"
             placeholder={tx.searchPlaceholder}
@@ -134,28 +154,42 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
             style={{ borderColor: 'var(--border)', background: 'var(--card-bg)' }}
           />
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => handleCategory('all')}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${category === 'all' ? 'text-white border-transparent' : 'border-gray-200'}`}
-              style={category === 'all' ? { background: 'var(--accent)' } : { color: 'var(--subtext)' }}
-            >
-              {tx.all}
-            </button>
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                onClick={() => handleCategory(cat)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${category === cat ? 'text-white border-transparent' : 'border-gray-200'}`}
-                style={category === cat ? { background: 'var(--accent)' } : { color: 'var(--subtext)' }}
-              >
-                {cat}
-              </button>
-            ))}
+            {(['all', ...CATEGORIES] as const).map(cat => {
+              const isActive = category === cat
+              return (
+                <button
+                  key={cat}
+                  onClick={() => handleCategory(cat)}
+                  className="px-3 py-1.5 rounded-full text-xs font-medium border transition-all"
+                  style={
+                    isActive
+                      ? { background: 'var(--text)', color: '#fff', borderColor: 'var(--text)' }
+                      : { color: 'var(--subtext)', borderColor: 'var(--border)', background: 'transparent' }
+                  }
+                  onMouseEnter={e => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'var(--tag-bg)'
+                      e.currentTarget.style.color = 'var(--text)'
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'transparent'
+                      e.currentTarget.style.color = 'var(--subtext)'
+                    }
+                  }}
+                >
+                  {cat === 'all' ? tx.all : cat}
+                </button>
+              )
+            })}
           </div>
           <p className="text-xs" style={{ color: 'var(--subtext)' }}>{tx.count(filtered.length)}</p>
         </div>
+      </div>
 
-        {/* カードグリッド */}
+      {/* ③ カードグリッド */}
+      <div className="max-w-6xl mx-auto px-5 pt-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {displayed.map((prompt, index) => (
             <>
@@ -167,7 +201,6 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                 favoriteIds={favoriteIds}
                 onFavoriteChange={handleFavoriteChange}
               />
-              {/* グリッド内CTA（32枚目付近） */}
               {index === 31 && hasMore && (
                 <div
                   key="cta-inline"
@@ -191,12 +224,11 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
           ))}
         </div>
 
-        {/* もっと見るボタン */}
         {hasMore && (
           <div className="text-center mt-8">
             <button
               onClick={() => setDisplayCount(c => c + PAGE_SIZE)}
-              className="px-8 py-2.5 rounded-full border-2 text-sm font-semibold transition-colors hover:opacity-80"
+              className="px-8 py-2.5 rounded-full border-2 text-sm font-semibold transition-all hover:opacity-80"
               style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}
             >
               {tx.loadMore}
@@ -204,14 +236,13 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
           </div>
         )}
 
-        {/* ③ CTAセクション（全件表示後） */}
+        {/* CTAセクション（全件表示後） */}
         {!hasMore && (
           <div className="mt-12 mb-4">
             <div
               className="rounded-2xl p-8 flex flex-col sm:flex-row gap-6 items-center justify-center"
               style={{ background: 'var(--tag-bg)', border: '1px solid var(--border)' }}
             >
-              {/* メール登録 */}
               <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left flex-1">
                 <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>{tx.newsletterLabel}</p>
                 <p className="font-bold text-base" style={{ color: 'var(--text)' }}>{tx.newsletterTitle}</p>
@@ -226,11 +257,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                   {tx.newsletterBtn}
                 </a>
               </div>
-
-              {/* 区切り */}
               <div className="hidden sm:block w-px self-stretch" style={{ background: 'var(--border)' }} />
-
-              {/* Buy Me a Coffee */}
               <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left flex-1">
                 <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>{tx.supportLabel}</p>
                 <p className="font-bold text-base" style={{ color: 'var(--text)' }}>{tx.supportTitle}</p>
@@ -239,7 +266,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                   href="https://buymeacoffee.com/aipromptscafe"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 px-5 py-2 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80"
+                  className="mt-1 px-5 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-80"
                   style={{ background: '#FFDD00', color: '#000' }}
                 >
                   {tx.supportBtn}
@@ -256,23 +283,26 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         style={{ borderTop: '1px solid var(--border)', background: 'var(--card-bg)' }}
       >
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between gap-6">
-          {/* サイト説明 */}
           <div className="flex flex-col gap-2 max-w-xs">
             <p className="font-bold" style={{ color: 'var(--accent)' }}>☕ AI Prompts Cafe</p>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--subtext)' }}>
               {tx.footerDesc}
             </p>
           </div>
-
-          {/* リンク */}
-          <div className="flex flex-col gap-2">
-            <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{tx.footerLinks}</p>
-            <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.newsletter}</a>
-            <a href="https://buymeacoffee.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.buyMeCoffee}</a>
+          <div className="flex gap-12">
+            <div className="flex flex-col gap-2">
+              <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{tx.footerLinks}</p>
+              <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.newsletter}</a>
+              <a href="https://buymeacoffee.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.buyMeCoffee}</a>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>Info</p>
+              <a href="/about" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.about}</a>
+              <a href="/contact" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.contact}</a>
+              <a href="/privacy" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.privacy}</a>
+            </div>
           </div>
         </div>
-
-        {/* コピーライト */}
         <div className="max-w-6xl mx-auto mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
           <p className="text-xs text-center" style={{ color: 'var(--subtext)' }}>
             {tx.copyright}
@@ -284,6 +314,8 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
       <PromptModal
         prompt={selectedPrompt}
         lang={lang}
+        relatedPrompts={relatedPrompts}
+        onSelect={setSelectedPrompt}
         onClose={() => setSelectedPrompt(null)}
       />
     </div>

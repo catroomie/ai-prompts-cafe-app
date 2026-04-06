@@ -42,6 +42,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
+  appleWebApp: {
+    capable: true,
+    title: 'AI Prompts Cafe',
+    statusBarStyle: 'default',
+  },
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({

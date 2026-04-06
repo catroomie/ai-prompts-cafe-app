@@ -74,7 +74,7 @@ export default function MypageClient({ username, prompts }: Props) {
           </div>
         )}
       </section>
-      <PromptModal prompt={selectedPrompt} lang={lang} onClose={() => setSelectedPrompt(null)} />
+      <PromptModal prompt={selectedPrompt} lang={lang} relatedPrompts={[]} onSelect={setSelectedPrompt} onClose={() => setSelectedPrompt(null)} />
     </div>
   )
 }

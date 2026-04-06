@@ -7,10 +7,12 @@ import type { Prompt } from '@/lib/types'
 interface Props {
   prompt: Prompt | null
   lang: 'ja' | 'en'
+  relatedPrompts: Prompt[]
+  onSelect: (prompt: Prompt) => void
   onClose: () => void
 }
 
-export default function PromptModal({ prompt, lang, onClose }: Props) {
+export default function PromptModal({ prompt, lang, relatedPrompts, onSelect, onClose }: Props) {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -19,6 +21,9 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
   }, [prompt, onClose])
+
+  // Reset copied state when prompt changes
+  useEffect(() => { setCopied(false) }, [prompt])
 
   if (!prompt) return null
 
@@ -32,6 +37,7 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
       ? 'Sign up free to unlock this prompt and get weekly AI prompt picks.'
       : '無料登録するとこのプロンプトが使えます。毎週新しいプロンプトも届きます。',
     premiumCta: lang === 'en' ? 'Sign up free →' : '無料で登録する →',
+    related: lang === 'en' ? 'Related prompts' : '関連プロンプト',
     newsletterTitle: lang === 'en' ? 'Join free. Get fresh AI prompts every week.' : '無料で使えるプロンプト20個を今すぐ受け取る',
     newsletterCta: lang === 'en' ? 'Subscribe free →' : '無料で受け取る →',
   }
@@ -54,7 +60,7 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.5)' }}
+      style={{ background: 'rgba(0,0,0,0.45)' }}
       onClick={onClose}
     >
       <div
@@ -71,28 +77,28 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
                   className="text-xs font-semibold px-2 py-0.5 rounded-full"
                   style={
                     prompt.content_type === 'template'
-                      ? { background: '#f5f3ff', color: '#8b5cf6' }
-                      : { background: '#ecfdf5', color: '#059669' }
+                      ? { background: '#f2f0f8', color: '#7060a8' }
+                      : { background: '#f0f5f2', color: '#3a8060' }
                   }
                 >
                   {prompt.content_type.toUpperCase()}
                 </span>
               )}
-              {prompt.is_premium ? (
+              {prompt.is_premium && (
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: '#fef9c3', color: '#b45309' }}>PREMIUM</span>
-              ) : (
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: '#f0fdf4', color: '#15803d' }}>FREE</span>
               )}
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full category-${prompt.category}`}>
+                {prompt.category}
+              </span>
             </div>
             <h2 className="font-bold text-lg" style={{ color: 'var(--text)' }}>{prompt.title}</h2>
             <p className="text-sm mt-1" style={{ color: 'var(--subtext)' }}>{description}</p>
           </div>
-          <button onClick={onClose} className="text-xl shrink-0" style={{ color: 'var(--subtext)' }}>✕</button>
+          <button onClick={onClose} className="text-xl shrink-0 leading-none" style={{ color: 'var(--subtext)' }}>✕</button>
         </div>
 
-        {/* Content area */}
+        {/* Content */}
         {prompt.is_premium ? (
-          // Premium: blur overlay
           <div className="relative rounded-xl overflow-hidden">
             <div
               className="rounded-xl p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap select-none"
@@ -103,7 +109,7 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
             </div>
             <div
               className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center rounded-xl"
-              style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(2px)' }}
+              style={{ background: 'rgba(255,255,255,0.85)' }}
             >
               <p className="text-2xl">🔒</p>
               <p className="font-bold text-base" style={{ color: 'var(--text)' }}>{tx.premiumTitle}</p>
@@ -119,7 +125,6 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
             </div>
           </div>
         ) : (
-          // Free: show full content
           <div
             className="rounded-xl p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap"
             style={{ background: '#f8f6f4', color: 'var(--text)', border: '1px solid var(--border)' }}
@@ -144,7 +149,7 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 rounded-xl font-medium text-white text-center transition-opacity hover:opacity-80"
-                style={{ background: '#8b5cf6' }}
+                style={{ background: '#7060a8' }}
               >
                 Open →
               </a>
@@ -159,7 +164,29 @@ export default function PromptModal({ prompt, lang, onClose }: Props) {
           </div>
         )}
 
-        {/* Newsletter CTA (free content only) */}
+        {/* 関連プロンプト */}
+        {relatedPrompts.length > 0 && (
+          <div>
+            <p className="text-xs font-semibold mb-2" style={{ color: 'var(--subtext)' }}>{tx.related}</p>
+            <div className="flex flex-col gap-2">
+              {relatedPrompts.map(rp => (
+                <button
+                  key={rp.id}
+                  onClick={() => onSelect(rp)}
+                  className="w-full text-left px-4 py-3 rounded-xl border transition-all hover:border-gray-400"
+                  style={{ background: 'var(--tag-bg)', borderColor: 'var(--border)' }}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{rp.title}</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full shrink-0 category-${rp.category}`}>{rp.category}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Newsletter CTA */}
         {!prompt.is_premium && (
           <div
             className="rounded-xl p-4 text-center"
