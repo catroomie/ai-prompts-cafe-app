@@ -5,10 +5,14 @@ import { cookies } from 'next/headers'
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  const next = searchParams.get('next') ?? '/'
+  const forwardedHost = request.headers.get('x-forwarded-host')
+  const redirectBase = forwardedHost ? `https://${forwardedHost}` : origin
 
   if (code) {
     const cookieStore = await cookies()
+    // リダイレクトレスポンスを先に作り、そこにクッキーをセットする
+    const response = NextResponse.redirect(`${redirectBase}/`)
+
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -18,26 +22,20 @@ export async function GET(request: Request) {
             return cookieStore.getAll()
           },
           setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
+            // レスポンスオブジェクトに直接クッキーをセット
+            cookiesToSet.forEach(({ name, value, options }) => {
+              response.cookies.set(name, value, options)
+            })
           },
         },
       }
     )
 
     const { error } = await supabase.auth.exchangeCodeForSession(code)
-
     if (!error) {
-      // Vercel環境ではx-forwarded-hostを優先する
-      const forwardedHost = request.headers.get('x-forwarded-host')
-      if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`)
-      }
-      return NextResponse.redirect(`${origin}${next}`)
+      return response
     }
   }
 
-  // エラー時はログインページへ
-  return NextResponse.redirect(`${origin}/login`)
+  return NextResponse.redirect(`${redirectBase}/login`)
 }
