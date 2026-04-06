@@ -60,29 +60,34 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleLangToggle}
-              className="relative text-sm px-3 py-1 rounded-full border font-medium cursor-pointer select-none"
+              className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full border font-medium cursor-pointer select-none"
               style={{
-                borderColor: lang === 'en' ? 'var(--accent)' : 'var(--border)',
-                color: lang === 'en' ? 'var(--accent)' : 'var(--subtext)',
-                background: lang === 'en' ? 'rgba(180,100,50,0.06)' : 'transparent',
+                borderColor: 'var(--border)',
+                color: 'var(--subtext)',
+                background: 'transparent',
                 transition: 'all 0.2s ease',
                 opacity: langAnimating ? 0.4 : 1,
                 transform: langAnimating ? 'scale(0.92)' : 'scale(1)',
               }}
               onMouseEnter={e => {
-                const el = e.currentTarget
-                el.style.background = 'var(--tag-bg)'
-                el.style.borderColor = 'var(--accent)'
-                el.style.color = 'var(--accent)'
+                e.currentTarget.style.background = 'var(--tag-bg)'
+                e.currentTarget.style.borderColor = '#999'
+                e.currentTarget.style.color = 'var(--text)'
               }}
               onMouseLeave={e => {
-                const el = e.currentTarget
-                el.style.background = lang === 'en' ? 'rgba(180,100,50,0.06)' : 'transparent'
-                el.style.borderColor = lang === 'en' ? 'var(--accent)' : 'var(--border)'
-                el.style.color = lang === 'en' ? 'var(--accent)' : 'var(--subtext)'
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.color = 'var(--subtext)'
               }}
+              title={lang === 'ja' ? 'Switch to English' : '日本語に切り替え'}
             >
-              {lang === 'ja' ? 'EN' : 'JA'}
+              {/* 地球アイコン */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              <span>{lang === 'ja' ? 'EN' : 'JA'}</span>
             </button>
 
             {user ? (
