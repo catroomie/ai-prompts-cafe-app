@@ -223,7 +223,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         {/* コピーライト */}
         <div className="max-w-6xl mx-auto mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
           <p className="text-xs text-center" style={{ color: 'var(--subtext)' }}>
-            © 2025 AI Prompts Cafe. All rights reserved.
+            © 2026 AI Prompts Cafe. All rights reserved.
           </p>
         </div>
       </footer>
