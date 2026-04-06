@@ -28,7 +28,7 @@ const t = {
     supportTitle: '役に立ったら応援してください',
     supportDesc: 'コーヒー1杯分のサポートが励みになります',
     supportBtn: '☕ コーヒーをおごる',
-    footerDesc: 'ChatGPT・Claude・Geminiで使えるAIプロンプトを無料公開。SNS・デザイン・マーケ・美容など幅広いカテゴリに対応。コピペで即使えます。',
+    footerDesc: 'AIプロンプトをすぐに使いたい人のための無料ライブラリ。SNS・デザイン・ビジネスまで、コピペで即使える形で公開しています。',
     footerLinks: 'リンク',
     newsletter: 'メールマガジン',
     buyMeCoffee: 'Buy Me a Coffee',
@@ -56,7 +56,7 @@ const t = {
     supportTitle: 'Found this useful?',
     supportDesc: 'Buy me a coffee and keep this project going',
     supportBtn: '☕ Buy me a coffee',
-    footerDesc: 'Free AI prompts for ChatGPT, Claude, and Gemini. Covering SNS, design, marketing, beauty, and more. Copy and use instantly.',
+    footerDesc: 'A free library for anyone who wants to use AI prompts right away. From SNS to design to business — copy, paste, and go.',
     footerLinks: 'Links',
     newsletter: 'Newsletter',
     buyMeCoffee: 'Buy Me a Coffee',
@@ -296,13 +296,18 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
               <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{tx.footerLinks}</p>
               <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.newsletter}</a>
               <a href="https://buymeacoffee.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.buyMeCoffee}</a>
+              {/* X (Twitter) */}
+              <a href="https://x.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline flex items-center gap-1" style={{ color: 'var(--subtext)' }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                X (Twitter)
+              </a>
             </div>
             <div className="flex flex-col gap-2">
               <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>Info</p>
               <a href="/about" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.about}</a>
+              <a href="/contact" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.contact}</a>
               <a href="/terms" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.terms}</a>
               <a href="/privacy" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.privacy}</a>
-              <a href="/contact" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.contact}</a>
             </div>
           </div>
         </div>
