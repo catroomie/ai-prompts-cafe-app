@@ -102,14 +102,14 @@ export default function PromptModal({ prompt, lang, relatedPrompts, onSelect, on
           <div className="relative rounded-xl overflow-hidden">
             <div
               className="rounded-xl p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap select-none"
-              style={{ background: '#f8f6f4', color: 'var(--text)', border: '1px solid var(--border)', filter: 'blur(4px)', userSelect: 'none' }}
+              style={{ background: 'var(--code-bg)', color: 'var(--text)', border: '1px solid var(--border)', filter: 'blur(4px)', userSelect: 'none' }}
               aria-hidden="true"
             >
               {prompt.content}
             </div>
             <div
               className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center rounded-xl"
-              style={{ background: 'rgba(255,255,255,0.85)' }}
+              style={{ background: 'var(--card-bg)', opacity: 0.95 }}
             >
               <p className="text-2xl">🔒</p>
               <p className="font-bold text-base" style={{ color: 'var(--text)' }}>{tx.premiumTitle}</p>
@@ -127,7 +127,7 @@ export default function PromptModal({ prompt, lang, relatedPrompts, onSelect, on
         ) : (
           <div
             className="rounded-xl p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap"
-            style={{ background: '#f8f6f4', color: 'var(--text)', border: '1px solid var(--border)' }}
+            style={{ background: 'var(--code-bg)', color: 'var(--text)', border: '1px solid var(--border)' }}
           >
             {prompt.content}
           </div>
@@ -190,7 +190,7 @@ export default function PromptModal({ prompt, lang, relatedPrompts, onSelect, on
         {!prompt.is_premium && (
           <div
             className="rounded-xl p-4 text-center"
-            style={{ background: '#fff5f0', border: '1px solid #f0c4aa' }}
+            style={{ background: 'var(--cta-warm-bg)', border: '1px solid var(--cta-warm-border)' }}
           >
             <p className="text-sm font-medium mb-2" style={{ color: 'var(--text)' }}>
               {tx.newsletterTitle}

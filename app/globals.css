@@ -4,7 +4,7 @@
   --bg: #f9f9f9;
   --text: #111111;
   --subtext: #666666;
-  --accent: #c8704a;        /* ボタン・リンクのみに使用 */
+  --accent: #c8704a;
   --accent-hover: #b05e3a;
   --card-bg: #ffffff;
   --border: #e5e5e5;
@@ -12,18 +12,52 @@
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
   --radius: 12px;
+  --code-bg: #f8f6f4;
+  --cta-warm-bg: #fff5f0;
+  --cta-warm-border: #f0c4aa;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111111;
+    --text: #eeeeee;
+    --subtext: #888888;
+    --accent: #d4855a;
+    --accent-hover: #e09570;
+    --card-bg: #1c1c1c;
+    --border: #2e2e2e;
+    --tag-bg: #222222;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.6);
+    --code-bg: #1e1a18;
+    --cta-warm-bg: #2a1a12;
+    --cta-warm-border: #5a3020;
+  }
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  color-scheme: light dark;
 }
 
-.category-SNS { background: #f0f3fa; color: #5b78b8; }
-.category-Design { background: #f2f0f8; color: #7060a8; }
-.category-Marketing { background: #f0f5f2; color: #3a8060; }
-.category-Beauty { background: #f8f0f5; color: #a05080; }
-.category-Writing { background: #f8f3ee; color: #a06030; }
+/* カテゴリバッジ：ライト */
+.category-SNS      { background: #f0f3fa; color: #5b78b8; }
+.category-Design   { background: #f2f0f8; color: #7060a8; }
+.category-Marketing{ background: #f0f5f2; color: #3a8060; }
+.category-Beauty   { background: #f8f0f5; color: #a05080; }
+.category-Writing  { background: #f8f3ee; color: #a06030; }
 .category-Business { background: #f3f3f3; color: #777777; }
-.category-Code { background: #f0f5f1; color: #3a8050; }
+.category-Code     { background: #f0f5f1; color: #3a8050; }
+
+/* カテゴリバッジ：ダーク */
+@media (prefers-color-scheme: dark) {
+  .category-SNS      { background: #1a2035; color: #8aaae0; }
+  .category-Design   { background: #1e1a2e; color: #a090d0; }
+  .category-Marketing{ background: #162018; color: #60a880; }
+  .category-Beauty   { background: #28141e; color: #c878a0; }
+  .category-Writing  { background: #281e12; color: #c08050; }
+  .category-Business { background: #1e1e1e; color: #aaaaaa; }
+  .category-Code     { background: #162018; color: #60a870; }
+}
