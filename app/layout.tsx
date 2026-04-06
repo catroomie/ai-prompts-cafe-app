@@ -43,6 +43,10 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.png', sizes: '48x48', type: 'image/png' },
+    ],
     apple: '/apple-touch-icon.png',
   },
   appleWebApp: {
