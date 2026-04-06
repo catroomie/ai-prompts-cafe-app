@@ -62,10 +62,10 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         className="py-10 px-5 text-center"
       >
         <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
-          すぐ使えるAIプロンプト集
+          無料AIプロンプト集｜ChatGPT・Claude・Gemini対応
         </h1>
         <p className="text-sm" style={{ color: 'var(--subtext)' }}>
-          ChatGPT・Claude・Gemini対応。コピペで即使える。
+          コピペで即使えるプロンプトを96種類無料公開中
         </p>
       </section>
 
