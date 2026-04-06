@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import MypageClient from './MypageClient'
 import type { Prompt } from '@/lib/types'
+
+export const metadata: Metadata = { title: 'マイページ' }
 
 export default async function MypagePage() {
   const supabase = await createClient()
