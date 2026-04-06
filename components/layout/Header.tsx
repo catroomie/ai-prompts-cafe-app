@@ -8,6 +8,7 @@ import type { User } from '@supabase/supabase-js'
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const [lang, setLang] = useState<'ja' | 'en'>('ja')
+  const [toast, setToast] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -21,46 +22,74 @@ export default function Header() {
   const handleSignOut = async () => {
     await supabase.auth.signOut()
     setUser(null)
+    setToast(true)
+    setTimeout(() => setToast(false), 3000)
   }
 
   return (
-    <header style={{ background: 'var(--card-bg)', borderBottom: '1px solid var(--border)' }} className="sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
-        <Link href="/" className="font-bold text-lg" style={{ color: 'var(--accent)' }}>
-          ☕ AI Prompts Cafe
-        </Link>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setLang(l => l === 'ja' ? 'en' : 'ja')}
-            className="text-sm px-3 py-1 rounded-full border"
-            style={{ borderColor: 'var(--border)', color: 'var(--subtext)' }}
-          >
-            {lang === 'ja' ? 'EN' : 'JA'}
-          </button>
-          {user ? (
-            <div className="flex items-center gap-2">
-              <Link href="/mypage" className="text-sm font-medium" style={{ color: 'var(--accent)' }}>
-                マイページ
-              </Link>
-              <button
-                onClick={handleSignOut}
-                className="text-sm px-3 py-1 rounded-full"
-                style={{ background: 'var(--tag-bg)', color: 'var(--subtext)' }}
-              >
-                ログアウト
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="text-sm px-4 py-1.5 rounded-full font-medium text-white"
-              style={{ background: 'var(--accent)' }}
+    <>
+      <header style={{ background: 'var(--card-bg)', borderBottom: '1px solid var(--border)' }} className="sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
+          <Link href="/" className="font-bold text-lg" style={{ color: 'var(--accent)' }}>
+            ☕ AI Prompts Cafe
+          </Link>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLang(l => l === 'ja' ? 'en' : 'ja')}
+              className="text-sm px-3 py-1 rounded-full border"
+              style={{ borderColor: 'var(--border)', color: 'var(--subtext)' }}
             >
-              ログイン
-            </Link>
-          )}
+              {lang === 'ja' ? 'EN' : 'JA'}
+            </button>
+            {user ? (
+              <div className="flex items-center gap-2">
+                <Link href="/mypage" className="text-sm font-medium" style={{ color: 'var(--accent)' }}>
+                  マイページ
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="text-sm px-3 py-1 rounded-full transition-colors hover:opacity-80"
+                  style={{ background: 'var(--tag-bg)', color: 'var(--subtext)' }}
+                >
+                  ログアウト
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="text-sm px-4 py-1.5 rounded-full font-medium text-white"
+                style={{ background: 'var(--accent)' }}
+              >
+                ログイン
+              </Link>
+            )}
+          </div>
         </div>
+      </header>
+
+      {/* ログアウトトースト */}
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '24px',
+          left: '50%',
+          transform: `translateX(-50%) translateY(${toast ? '0' : '80px'})`,
+          opacity: toast ? 1 : 0,
+          transition: 'all 0.3s ease',
+          background: '#333',
+          color: '#fff',
+          padding: '10px 20px',
+          borderRadius: '999px',
+          fontSize: '13px',
+          fontWeight: 500,
+          zIndex: 9999,
+          pointerEvents: 'none',
+          whiteSpace: 'nowrap',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        }}
+      >
+        ✓ ログアウトしました
       </div>
-    </header>
+    </>
   )
 }
