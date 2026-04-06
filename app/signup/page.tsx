@@ -18,7 +18,7 @@ export default function SignupPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: `${window.location.origin}/auth/confirm` }
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` }
     })
     setMessage(error ? error.message : '確認メールを送信しました。メールをご確認ください。')
     setLoading(false)
@@ -28,7 +28,7 @@ export default function SignupPage() {
     if (!isSupabaseConfigured()) { setMessage('Supabaseが設定されていません'); return }
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/confirm` }
+      options: { redirectTo: `${window.location.origin}/auth/callback` }
     })
   }
 
