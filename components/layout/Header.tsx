@@ -8,12 +8,34 @@ import type { User } from '@supabase/supabase-js'
 
 type ToastType = 'logout' | 'lang-en' | 'lang-ja' | null
 
+const t = {
+  ja: {
+    mypage: 'マイページ',
+    signout: 'ログアウト',
+    signin: 'ログイン',
+    toastLogout: '✓ ログアウトしました',
+    toastEn: '🌐 Switched to English',
+    toastJa: '🌐 日本語に切り替えました',
+    langHint: 'Switch to English',
+  },
+  en: {
+    mypage: 'My page',
+    signout: 'Sign out',
+    signin: 'Sign in',
+    toastLogout: '✓ Signed out',
+    toastEn: '🌐 Switched to English',
+    toastJa: '🌐 日本語に切り替えました',
+    langHint: '日本語に切り替え',
+  },
+}
+
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const { lang, setLang } = useLang()
   const [toast, setToast] = useState<ToastType>(null)
   const [langAnimating, setLangAnimating] = useState(false)
   const supabase = createClient()
+  const tx = t[lang]
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user))
@@ -44,11 +66,12 @@ export default function Header() {
     }, 120)
   }
 
-  const toastMessage = {
-    logout: '✓ ログアウトしました',
+  const toastMessages: Record<string, string> = {
+    logout: tx.toastLogout,
     'lang-en': '🌐 Switched to English',
     'lang-ja': '🌐 日本語に切り替えました',
-  }[toast ?? 'logout']
+  }
+  const toastMessage = toast ? toastMessages[toast] : ''
 
   return (
     <>
@@ -81,7 +104,6 @@ export default function Header() {
               }}
               title={lang === 'ja' ? 'Switch to English' : '日本語に切り替え'}
             >
-              {/* 地球アイコン */}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="2" y1="12" x2="22" y2="12"/>
@@ -93,14 +115,14 @@ export default function Header() {
             {user ? (
               <div className="flex items-center gap-2">
                 <Link href="/mypage" className="text-sm font-medium" style={{ color: 'var(--text)' }}>
-                  マイページ
+                  {tx.mypage}
                 </Link>
                 <button
                   onClick={handleSignOut}
                   className="text-sm px-3 py-1 rounded-full transition-all hover:opacity-70 cursor-pointer"
                   style={{ background: 'var(--tag-bg)', color: 'var(--subtext)' }}
                 >
-                  ログアウト
+                  {tx.signout}
                 </button>
               </div>
             ) : (
@@ -109,7 +131,7 @@ export default function Header() {
                 className="text-sm px-4 py-1.5 rounded-full font-medium text-white transition-opacity hover:opacity-80"
                 style={{ background: 'var(--accent)' }}
               >
-                ログイン
+                {tx.signin}
               </Link>
             )}
           </div>

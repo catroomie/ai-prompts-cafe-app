@@ -9,6 +9,57 @@ import PromptModal from './PromptModal'
 const CATEGORIES = ['SNS', 'Design', 'Marketing', 'Beauty', 'Writing', 'Business', 'Code'] as const
 const PAGE_SIZE = 16
 
+const t = {
+  ja: {
+    heroTitle: '無料AIプロンプト集｜ChatGPT・Claude・Gemini対応',
+    heroSub: '豊富なプロンプトをコピペで即使える',
+    searchPlaceholder: 'プロンプトを検索...',
+    all: 'すべて',
+    count: (n: number) => `${n} 件`,
+    loadMore: 'もっと見る',
+    inlineCta: '無料で使えるプロンプト20個を今すぐ受け取る',
+    inlineCtaSub: '＋毎週使えるプロンプトを配信',
+    inlineCtaBtn: '無料で受け取る →',
+    newsletterLabel: 'Newsletter',
+    newsletterTitle: '週1でプロンプトを届けます',
+    newsletterDesc: '無料登録で厳選プロンプトをメールで受け取れる',
+    newsletterBtn: '無料で登録する →',
+    supportLabel: 'Support',
+    supportTitle: '役に立ったら応援してください',
+    supportDesc: 'コーヒー1杯分のサポートが励みになります',
+    supportBtn: '☕ コーヒーをおごる',
+    footerDesc: 'ChatGPT・Claude・Geminiで使えるAIプロンプトを無料公開。SNS・デザイン・マーケ・美容など幅広いカテゴリに対応。コピペで即使えます。',
+    footerLinks: 'リンク',
+    newsletter: 'メールマガジン',
+    buyMeCoffee: 'Buy Me a Coffee',
+    copyright: '© 2026 AI Prompts Cafe. All rights reserved.',
+  },
+  en: {
+    heroTitle: 'Free AI Prompt Library | ChatGPT · Claude · Gemini',
+    heroSub: 'Copy and use AI prompts instantly',
+    searchPlaceholder: 'Search prompts...',
+    all: 'All',
+    count: (n: number) => `${n} result${n === 1 ? '' : 's'}`,
+    loadMore: 'Load more',
+    inlineCta: 'Join free. Get fresh AI prompts every week.',
+    inlineCtaSub: '+ weekly prompts delivered to your inbox',
+    inlineCtaBtn: 'Subscribe free →',
+    newsletterLabel: 'Newsletter',
+    newsletterTitle: 'Fresh AI prompts, every week',
+    newsletterDesc: 'Sign up free and get curated prompts delivered to your inbox',
+    newsletterBtn: 'Subscribe free →',
+    supportLabel: 'Support',
+    supportTitle: 'Found this useful?',
+    supportDesc: 'Buy me a coffee and keep this project going',
+    supportBtn: '☕ Buy me a coffee',
+    footerDesc: 'Free AI prompts for ChatGPT, Claude, and Gemini. Covering SNS, design, marketing, beauty, and more. Copy and use instantly.',
+    footerLinks: 'Links',
+    newsletter: 'Newsletter',
+    buyMeCoffee: 'Buy Me a Coffee',
+    copyright: '© 2026 AI Prompts Cafe. All rights reserved.',
+  },
+}
+
 interface Props {
   prompts: Prompt[]
   initialFavoriteIds: string[]
@@ -16,6 +67,7 @@ interface Props {
 
 export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
   const { lang } = useLang()
+  const tx = t[lang]
   const [category, setCategory] = useState<string>('all')
   const [search, setSearch] = useState('')
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE)
@@ -57,16 +109,16 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
 
   return (
     <div>
-      {/* ① ヒーロー：タイトル・説明のみ（コーヒーボタン削除） */}
+      {/* ① ヒーロー */}
       <section
         style={{ background: 'var(--card-bg)', borderBottom: '1px solid var(--border)' }}
         className="py-10 px-5 text-center"
       >
         <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
-          無料AIプロンプト集｜ChatGPT・Claude・Gemini対応
+          {tx.heroTitle}
         </h1>
         <p className="text-sm" style={{ color: 'var(--subtext)' }}>
-          豊富なプロンプトをコピペで即使える
+          {tx.heroSub}
         </p>
       </section>
 
@@ -75,7 +127,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         <div className="flex flex-col gap-3 mb-5">
           <input
             type="text"
-            placeholder="プロンプトを検索..."
+            placeholder={tx.searchPlaceholder}
             value={search}
             onChange={e => handleSearch(e.target.value)}
             className="w-full px-4 py-2.5 rounded-xl border text-sm outline-none"
@@ -87,7 +139,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
               className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${category === 'all' ? 'text-white border-transparent' : 'border-gray-200'}`}
               style={category === 'all' ? { background: 'var(--accent)' } : { color: 'var(--subtext)' }}
             >
-              すべて
+              {tx.all}
             </button>
             {CATEGORIES.map(cat => (
               <button
@@ -100,7 +152,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
               </button>
             ))}
           </div>
-          <p className="text-xs" style={{ color: 'var(--subtext)' }}>{filtered.length} 件</p>
+          <p className="text-xs" style={{ color: 'var(--subtext)' }}>{tx.count(filtered.length)}</p>
         </div>
 
         {/* カードグリッド */}
@@ -122,8 +174,8 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                   className="col-span-full rounded-xl p-6 text-center flex flex-col items-center gap-3"
                   style={{ background: 'var(--tag-bg)', border: '1px solid var(--border)' }}
                 >
-                  <p className="font-bold" style={{ color: 'var(--text)' }}>無料で使えるプロンプト20個を今すぐ受け取る</p>
-                  <p className="text-sm" style={{ color: 'var(--subtext)' }}>＋毎週使えるプロンプトを配信</p>
+                  <p className="font-bold" style={{ color: 'var(--text)' }}>{tx.inlineCta}</p>
+                  <p className="text-sm" style={{ color: 'var(--subtext)' }}>{tx.inlineCtaSub}</p>
                   <a
                     href="https://ai-prompts-cafe.beehiiv.com/subscribe"
                     target="_blank"
@@ -131,7 +183,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                     className="px-5 py-2 rounded-full text-sm font-semibold text-white"
                     style={{ background: 'var(--accent)' }}
                   >
-                    無料で受け取る →
+                    {tx.inlineCtaBtn}
                   </a>
                 </div>
               )}
@@ -147,12 +199,12 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
               className="px-8 py-2.5 rounded-full border-2 text-sm font-semibold transition-colors hover:opacity-80"
               style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}
             >
-              もっと見る
+              {tx.loadMore}
             </button>
           </div>
         )}
 
-        {/* ③ CTAセクション（もっと見るの下 or 全件表示後） */}
+        {/* ③ CTAセクション（全件表示後） */}
         {!hasMore && (
           <div className="mt-12 mb-4">
             <div
@@ -161,9 +213,9 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
             >
               {/* メール登録 */}
               <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left flex-1">
-                <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>Newsletter</p>
-                <p className="font-bold text-base" style={{ color: 'var(--text)' }}>週1でプロンプトを届けます</p>
-                <p className="text-sm" style={{ color: 'var(--subtext)' }}>無料登録で厳選プロンプトをメールで受け取れる</p>
+                <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>{tx.newsletterLabel}</p>
+                <p className="font-bold text-base" style={{ color: 'var(--text)' }}>{tx.newsletterTitle}</p>
+                <p className="text-sm" style={{ color: 'var(--subtext)' }}>{tx.newsletterDesc}</p>
                 <a
                   href="https://ai-prompts-cafe.beehiiv.com/subscribe"
                   target="_blank"
@@ -171,7 +223,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                   className="mt-1 px-5 py-2 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80"
                   style={{ background: 'var(--accent)' }}
                 >
-                  無料で登録する →
+                  {tx.newsletterBtn}
                 </a>
               </div>
 
@@ -180,9 +232,9 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
 
               {/* Buy Me a Coffee */}
               <div className="flex flex-col items-center sm:items-start gap-2 text-center sm:text-left flex-1">
-                <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>Support</p>
-                <p className="font-bold text-base" style={{ color: 'var(--text)' }}>役に立ったら応援してください</p>
-                <p className="text-sm" style={{ color: 'var(--subtext)' }}>コーヒー1杯分のサポートが励みになります</p>
+                <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>{tx.supportLabel}</p>
+                <p className="font-bold text-base" style={{ color: 'var(--text)' }}>{tx.supportTitle}</p>
+                <p className="text-sm" style={{ color: 'var(--subtext)' }}>{tx.supportDesc}</p>
                 <a
                   href="https://buymeacoffee.com/aipromptscafe"
                   target="_blank"
@@ -190,7 +242,7 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
                   className="mt-1 px-5 py-2 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80"
                   style={{ background: '#FFDD00', color: '#000' }}
                 >
-                  ☕ コーヒーをおごる
+                  {tx.supportBtn}
                 </a>
               </div>
             </div>
@@ -208,22 +260,22 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
           <div className="flex flex-col gap-2 max-w-xs">
             <p className="font-bold" style={{ color: 'var(--accent)' }}>☕ AI Prompts Cafe</p>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--subtext)' }}>
-              ChatGPT・Claude・Geminiで使えるAIプロンプトを無料公開。SNS・デザイン・マーケ・美容など幅広いカテゴリに対応。コピペで即使えます。
+              {tx.footerDesc}
             </p>
           </div>
 
           {/* リンク */}
           <div className="flex flex-col gap-2">
-            <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>リンク</p>
-            <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>メールマガジン</a>
-            <a href="https://buymeacoffee.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>Buy Me a Coffee</a>
+            <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{tx.footerLinks}</p>
+            <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.newsletter}</a>
+            <a href="https://buymeacoffee.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.buyMeCoffee}</a>
           </div>
         </div>
 
         {/* コピーライト */}
         <div className="max-w-6xl mx-auto mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
           <p className="text-xs text-center" style={{ color: 'var(--subtext)' }}>
-            © 2026 AI Prompts Cafe. All rights reserved.
+            {tx.copyright}
           </p>
         </div>
       </footer>
