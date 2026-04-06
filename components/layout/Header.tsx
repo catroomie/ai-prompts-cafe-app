@@ -5,10 +5,13 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
+type ToastType = 'logout' | 'lang-en' | 'lang-ja' | null
+
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const [lang, setLang] = useState<'ja' | 'en'>('ja')
-  const [toast, setToast] = useState(false)
+  const [toast, setToast] = useState<ToastType>(null)
+  const [langAnimating, setLangAnimating] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -19,12 +22,34 @@ export default function Header() {
     return () => subscription.unsubscribe()
   }, [])
 
+  const showToast = (type: ToastType) => {
+    setToast(type)
+    setTimeout(() => setToast(null), 2500)
+  }
+
   const handleSignOut = async () => {
     await supabase.auth.signOut()
     setUser(null)
-    setToast(true)
-    setTimeout(() => setToast(false), 3000)
+    showToast('logout')
   }
+
+  const handleLangToggle = () => {
+    setLangAnimating(true)
+    setTimeout(() => {
+      setLang(l => {
+        const next = l === 'ja' ? 'en' : 'ja'
+        showToast(next === 'en' ? 'lang-en' : 'lang-ja')
+        return next
+      })
+      setLangAnimating(false)
+    }, 120)
+  }
+
+  const toastMessage = {
+    logout: '✓ ログアウトしました',
+    'lang-en': '🌐 Switched to English',
+    'lang-ja': '🌐 日本語に切り替えました',
+  }[toast ?? 'logout']
 
   return (
     <>
@@ -34,13 +59,35 @@ export default function Header() {
             ☕ AI Prompts Cafe
           </Link>
           <div className="flex items-center gap-3">
+
+            {/* 言語切り替えボタン */}
             <button
-              onClick={() => setLang(l => l === 'ja' ? 'en' : 'ja')}
-              className="text-sm px-3 py-1 rounded-full border"
-              style={{ borderColor: 'var(--border)', color: 'var(--subtext)' }}
+              onClick={handleLangToggle}
+              className="relative text-sm px-3 py-1 rounded-full border font-medium cursor-pointer select-none"
+              style={{
+                borderColor: lang === 'en' ? 'var(--accent)' : 'var(--border)',
+                color: lang === 'en' ? 'var(--accent)' : 'var(--subtext)',
+                background: lang === 'en' ? 'rgba(180,100,50,0.06)' : 'transparent',
+                transition: 'all 0.2s ease',
+                opacity: langAnimating ? 0.4 : 1,
+                transform: langAnimating ? 'scale(0.92)' : 'scale(1)',
+              }}
+              onMouseEnter={e => {
+                const el = e.currentTarget
+                el.style.background = 'var(--tag-bg)'
+                el.style.borderColor = 'var(--accent)'
+                el.style.color = 'var(--accent)'
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget
+                el.style.background = lang === 'en' ? 'rgba(180,100,50,0.06)' : 'transparent'
+                el.style.borderColor = lang === 'en' ? 'var(--accent)' : 'var(--border)'
+                el.style.color = lang === 'en' ? 'var(--accent)' : 'var(--subtext)'
+              }}
             >
               {lang === 'ja' ? 'EN' : 'JA'}
             </button>
+
             {user ? (
               <div className="flex items-center gap-2">
                 <Link href="/mypage" className="text-sm font-medium" style={{ color: 'var(--accent)' }}>
@@ -48,7 +95,7 @@ export default function Header() {
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="text-sm px-3 py-1 rounded-full transition-colors hover:opacity-80"
+                  className="text-sm px-3 py-1 rounded-full transition-all hover:opacity-70 cursor-pointer"
                   style={{ background: 'var(--tag-bg)', color: 'var(--subtext)' }}
                 >
                   ログアウト
@@ -57,7 +104,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/login"
-                className="text-sm px-4 py-1.5 rounded-full font-medium text-white"
+                className="text-sm px-4 py-1.5 rounded-full font-medium text-white transition-opacity hover:opacity-80"
                 style={{ background: 'var(--accent)' }}
               >
                 ログイン
@@ -67,7 +114,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* ログアウトトースト */}
+      {/* トースト通知 */}
       <div
         style={{
           position: 'fixed',
@@ -75,7 +122,7 @@ export default function Header() {
           left: '50%',
           transform: `translateX(-50%) translateY(${toast ? '0' : '80px'})`,
           opacity: toast ? 1 : 0,
-          transition: 'all 0.3s ease',
+          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
           background: '#333',
           color: '#fff',
           padding: '10px 20px',
@@ -85,10 +132,10 @@ export default function Header() {
           zIndex: 9999,
           pointerEvents: 'none',
           whiteSpace: 'nowrap',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
         }}
       >
-        ✓ ログアウトしました
+        {toastMessage}
       </div>
     </>
   )
