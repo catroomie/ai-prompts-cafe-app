@@ -4,6 +4,34 @@ import { useState } from 'react'
 import { createClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useLang } from '@/lib/LanguageContext'
+
+const t = {
+  ja: {
+    title: 'ログイン',
+    google: 'Googleでログイン',
+    or: 'またはメールで',
+    email: 'メールアドレス',
+    password: 'パスワード',
+    submit: 'ログイン',
+    submitting: 'ログイン中...',
+    error: 'メールアドレスまたはパスワードが正しくありません',
+    noAccount: 'アカウントをお持ちでない方は',
+    signup: '新規登録',
+  },
+  en: {
+    title: 'Sign in',
+    google: 'Sign in with Google',
+    or: 'Or continue with email',
+    email: 'Email address',
+    password: 'Password',
+    submit: 'Sign in',
+    submitting: 'Signing in...',
+    error: 'Invalid email or password',
+    noAccount: "Don't have an account?",
+    signup: 'Sign up',
+  },
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -12,18 +40,17 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const router = useRouter()
   const supabase = createClient()
+  const { lang } = useLang()
+  const tx = t[lang]
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!isSupabaseConfigured()) {
-      setError('Supabaseが設定されていません')
-      return
-    }
+    if (!isSupabaseConfigured()) { setError('Supabase not configured'); return }
     setLoading(true)
     setError('')
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
-      setError('メールアドレスまたはパスワードが正しくありません')
+      setError(tx.error)
       setLoading(false)
     } else {
       router.push('/')
@@ -32,10 +59,7 @@ export default function LoginPage() {
   }
 
   const handleGoogleLogin = async () => {
-    if (!isSupabaseConfigured()) {
-      setError('Supabaseが設定されていません')
-      return
-    }
+    if (!isSupabaseConfigured()) { setError('Supabase not configured'); return }
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: `${window.location.origin}/auth/callback` }
@@ -47,7 +71,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <Link href="/" className="text-2xl font-bold" style={{ color: 'var(--accent)' }}>☕ AI Prompts Cafe</Link>
-          <p className="mt-2 text-sm" style={{ color: 'var(--subtext)' }}>ログイン</p>
+          <p className="mt-2 text-sm" style={{ color: 'var(--subtext)' }}>{tx.title}</p>
         </div>
         <div className="rounded-2xl p-6" style={{ background: 'var(--card-bg)', border: '1px solid var(--border)' }}>
           <button
@@ -56,26 +80,26 @@ export default function LoginPage() {
             style={{ borderColor: 'var(--border)' }}
           >
             <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
-            Googleでログイン
+            {tx.google}
           </button>
           <div className="relative mb-4">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t" style={{ borderColor: 'var(--border)' }}></div>
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="px-2" style={{ background: 'var(--card-bg)', color: 'var(--subtext)' }}>またはメールで</span>
+              <span className="px-2" style={{ background: 'var(--card-bg)', color: 'var(--subtext)' }}>{tx.or}</span>
             </div>
           </div>
           <form onSubmit={handleLogin} className="flex flex-col gap-3">
-            <input type="email" placeholder="メールアドレス" value={email} onChange={e => setEmail(e.target.value)} required className="w-full px-4 py-2.5 rounded-xl border text-sm outline-none" style={{ borderColor: 'var(--border)' }} />
-            <input type="password" placeholder="パスワード" value={password} onChange={e => setPassword(e.target.value)} required className="w-full px-4 py-2.5 rounded-xl border text-sm outline-none" style={{ borderColor: 'var(--border)' }} />
+            <input type="email" placeholder={tx.email} value={email} onChange={e => setEmail(e.target.value)} required className="w-full px-4 py-2.5 rounded-xl border text-sm outline-none" style={{ borderColor: 'var(--border)' }} />
+            <input type="password" placeholder={tx.password} value={password} onChange={e => setPassword(e.target.value)} required className="w-full px-4 py-2.5 rounded-xl border text-sm outline-none" style={{ borderColor: 'var(--border)' }} />
             {error && <p className="text-xs text-red-500">{error}</p>}
             <button type="submit" disabled={loading} className="w-full py-3 rounded-xl text-sm font-semibold text-white" style={{ background: 'var(--accent)' }}>
-              {loading ? 'ログイン中...' : 'ログイン'}
+              {loading ? tx.submitting : tx.submit}
             </button>
           </form>
           <p className="text-center text-xs mt-4" style={{ color: 'var(--subtext)' }}>
-            アカウントをお持ちでない方は <Link href="/signup" style={{ color: 'var(--accent)' }}>新規登録</Link>
+            {tx.noAccount} <Link href="/signup" style={{ color: 'var(--accent)' }}>{tx.signup}</Link>
           </p>
         </div>
       </div>
