@@ -6,7 +6,7 @@ import { LanguageProvider } from '@/lib/LanguageContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const SITE_URL = 'https://ai-prompts-cafe-app.vercel.app'
+const SITE_URL = 'https://www.ai-prompts-cafe.com'
 const SITE_NAME = 'AI Prompts Cafe'
 const SITE_TITLE = 'AI Prompts Cafe｜無料AIプロンプト集'
 const SITE_DESC = 'ChatGPT・Claude・Geminiで使えるAIプロンプトを無料公開。SNS投稿・デザイン・マーケティング・美容・ライティング・コードまで対応。コピペで即使える実用プロンプト集。'
