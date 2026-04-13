@@ -279,10 +279,27 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         )}
       </div>
 
-      {/* ④ フッター */}
+      {/* ④ ナビバー（内部ページのみ） */}
+      <nav
+        className="w-full py-4 px-5"
+        style={{ background: 'var(--nav-bg)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}
+      >
+        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
+          {[
+            { label: 'About', href: '/about' },
+            { label: 'Contact', href: '/contact' },
+            { label: lang === 'en' ? 'Terms of Use' : '利用規約', href: '/terms' },
+            { label: lang === 'en' ? 'Privacy Policy' : 'プライバシーポリシー', href: '/privacy' },
+          ].map(({ label, href }) => (
+            <a key={href} href={href} className="nav-link">{label}</a>
+          ))}
+        </div>
+      </nav>
+
+      {/* ⑤ フッター */}
       <footer
-        className="mt-16 py-12 px-5"
-        style={{ borderTop: '2px solid var(--border)', background: 'var(--card-bg)' }}
+        className="mt-8 py-12 px-5"
+        style={{ borderTop: '1px solid var(--border)', background: 'var(--card-bg)' }}
       >
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10">
           {/* ブランド */}
