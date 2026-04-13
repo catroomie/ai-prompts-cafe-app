@@ -279,38 +279,21 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         )}
       </div>
 
-      {/* ④ ナビバー（内部ページのみ） */}
-      <nav
-        className="w-full py-4 px-5"
-        style={{ background: 'var(--nav-bg)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}
-      >
-        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
-          {[
-            { label: 'About', href: '/about' },
-            { label: 'Contact', href: '/contact' },
-            { label: lang === 'en' ? 'Terms of Use' : '利用規約', href: '/terms' },
-            { label: lang === 'en' ? 'Privacy Policy' : 'プライバシーポリシー', href: '/privacy' },
-          ].map(({ label, href }) => (
-            <a key={href} href={href} className="nav-link">{label}</a>
-          ))}
-        </div>
-      </nav>
-
-      {/* ⑤ フッター */}
+      {/* ④ フッター */}
       <footer
-        className="mt-8 py-12 px-5"
+        className="mt-16 py-12 px-5"
         style={{ borderTop: '1px solid var(--border)', background: 'var(--card-bg)' }}
       >
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-10">
           {/* ブランド */}
-          <div className="flex flex-col gap-3 max-w-xs">
+          <div className="flex flex-col gap-3">
             <p className="font-bold" style={{ color: 'var(--accent)' }}>☕ AI Prompts Cafe</p>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--subtext)' }}>
               {tx.footerDesc}
             </p>
           </div>
 
-          {/* Links — 外部導線のみ */}
+          {/* Links — 外部導線 */}
           <div className="flex flex-col gap-3">
             <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: 'var(--text)' }}>{tx.footerLinks}</p>
             <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.newsletter}</a>
@@ -319,6 +302,15 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
               <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               X (Twitter)
             </a>
+          </div>
+
+          {/* Info — 内部ページ */}
+          <div className="flex flex-col gap-3">
+            <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: 'var(--text)' }}>Info</p>
+            <a href="/about" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.about}</a>
+            <a href="/contact" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.contact}</a>
+            <a href="/terms" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.terms}</a>
+            <a href="/privacy" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.privacy}</a>
           </div>
         </div>
 
