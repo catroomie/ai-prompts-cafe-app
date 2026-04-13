@@ -279,7 +279,34 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         )}
       </div>
 
-      {/* ④ フッター */}
+      {/* ④ ナビバー */}
+      <nav
+        className="w-full py-4 px-5"
+        style={{ background: 'var(--nav-bg)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}
+      >
+        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
+          {[
+            { label: 'About', href: '/about' },
+            { label: 'Contact', href: '/contact' },
+            { label: lang === 'en' ? 'Terms of Use' : '利用規約', href: '/terms' },
+            { label: lang === 'en' ? 'Privacy Policy' : 'プライバシーポリシー', href: '/privacy' },
+            { label: lang === 'en' ? 'Newsletter' : 'メールマガジン', href: 'https://ai-prompts-cafe.beehiiv.com/subscribe', external: true },
+            { label: 'X (Twitter)', href: 'https://x.com/aipromptscafe', external: true },
+          ].map(({ label, href, external }) => (
+            <a
+              key={href}
+              href={href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
+              className="nav-link"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      {/* ⑤ フッター */}
       <footer
         className="mt-0 py-12 px-5"
         style={{ borderTop: '1px solid var(--border)', background: 'var(--card-bg)' }}
