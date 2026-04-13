@@ -15,7 +15,6 @@
   --code-bg: #f8f6f4;
   --cta-warm-bg: #fff5f0;
   --cta-warm-border: #f0c4aa;
-  --nav-bg: #e8e8e8;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,7 +32,6 @@
     --code-bg: #1e1a18;
     --cta-warm-bg: #2a1a12;
     --cta-warm-border: #5a3020;
-    --nav-bg: #1e1e1e;
   }
 }
 
@@ -42,19 +40,6 @@ body {
   color: var(--text);
   font-family: 'Inter', 'Noto Sans JP', sans-serif;
   color-scheme: light dark;
-}
-
-/* ナビバーリンク */
-.nav-link {
-  font-size: 12px;
-  color: #666666;
-  transition: color 0.15s ease;
-}
-.nav-link:hover { color: #222222; }
-
-@media (prefers-color-scheme: dark) {
-  .nav-link { color: #888888; }
-  .nav-link:hover { color: #eeeeee; }
 }
 
 /* カテゴリバッジ：ライト */

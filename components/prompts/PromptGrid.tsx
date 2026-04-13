@@ -279,66 +279,33 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
         )}
       </div>
 
-      {/* ④ ナビバー */}
-      <nav
-        className="w-full py-4 px-5"
-        style={{ background: 'var(--nav-bg)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}
-      >
-        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
-          {[
-            { label: 'About', href: '/about' },
-            { label: 'Contact', href: '/contact' },
-            { label: lang === 'en' ? 'Terms of Use' : '利用規約', href: '/terms' },
-            { label: lang === 'en' ? 'Privacy Policy' : 'プライバシーポリシー', href: '/privacy' },
-            { label: lang === 'en' ? 'Newsletter' : 'メールマガジン', href: 'https://ai-prompts-cafe.beehiiv.com/subscribe', external: true },
-            { label: 'X (Twitter)', href: 'https://x.com/aipromptscafe', external: true },
-          ].map(({ label, href, external }) => (
-            <a
-              key={href}
-              href={href}
-              target={external ? '_blank' : undefined}
-              rel={external ? 'noopener noreferrer' : undefined}
-              className="nav-link"
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      </nav>
-
-      {/* ⑤ フッター */}
+      {/* ④ フッター */}
       <footer
-        className="mt-8 py-10 px-5"
+        className="mt-0 py-12 px-5"
         style={{ borderTop: '1px solid var(--border)', background: 'var(--card-bg)' }}
       >
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between gap-6">
-          <div className="flex flex-col gap-2 max-w-xs">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10">
+          {/* ブランド */}
+          <div className="flex flex-col gap-3 max-w-xs">
             <p className="font-bold" style={{ color: 'var(--accent)' }}>☕ AI Prompts Cafe</p>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--subtext)' }}>
               {tx.footerDesc}
             </p>
           </div>
-          <div className="flex gap-12">
-            <div className="flex flex-col gap-2">
-              <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{tx.footerLinks}</p>
-              <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.newsletter}</a>
-              <a href="https://buymeacoffee.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.buyMeCoffee}</a>
-              {/* X (Twitter) */}
-              <a href="https://x.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline flex items-center gap-1" style={{ color: 'var(--subtext)' }}>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                X (Twitter)
-              </a>
-            </div>
-            <div className="flex flex-col gap-2">
-              <p className="text-xs font-semibold" style={{ color: 'var(--text)' }}>Info</p>
-              <a href="/about" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.about}</a>
-              <a href="/contact" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.contact}</a>
-              <a href="/terms" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.terms}</a>
-              <a href="/privacy" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.privacy}</a>
-            </div>
+
+          {/* Links — 外部導線のみ */}
+          <div className="flex flex-col gap-3">
+            <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: 'var(--text)' }}>{tx.footerLinks}</p>
+            <a href="https://ai-prompts-cafe.beehiiv.com/subscribe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.newsletter}</a>
+            <a href="https://buymeacoffee.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline" style={{ color: 'var(--subtext)' }}>{tx.buyMeCoffee}</a>
+            <a href="https://x.com/aipromptscafe" target="_blank" rel="noopener noreferrer" className="text-xs hover:underline flex items-center gap-1" style={{ color: 'var(--subtext)' }}>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              X (Twitter)
+            </a>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
+
+        <div className="max-w-6xl mx-auto mt-10 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
           <p className="text-xs text-center" style={{ color: 'var(--subtext)' }}>
             {tx.copyright}
           </p>
