@@ -290,8 +290,6 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
             { label: 'Contact', href: '/contact' },
             { label: lang === 'en' ? 'Terms of Use' : '利用規約', href: '/terms' },
             { label: lang === 'en' ? 'Privacy Policy' : 'プライバシーポリシー', href: '/privacy' },
-            { label: lang === 'en' ? 'Newsletter' : 'メールマガジン', href: 'https://ai-prompts-cafe.beehiiv.com/subscribe', external: true },
-            { label: 'X (Twitter)', href: 'https://x.com/aipromptscafe', external: true },
           ].map(({ label, href, external }) => (
             <a
               key={href}
