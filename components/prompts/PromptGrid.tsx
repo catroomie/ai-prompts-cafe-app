@@ -290,12 +290,10 @@ export default function PromptGrid({ prompts, initialFavoriteIds }: Props) {
             { label: 'Contact', href: '/contact' },
             { label: lang === 'en' ? 'Terms of Use' : '利用規約', href: '/terms' },
             { label: lang === 'en' ? 'Privacy Policy' : 'プライバシーポリシー', href: '/privacy' },
-          ].map(({ label, href, external }) => (
+          ].map(({ label, href }) => (
             <a
               key={href}
               href={href}
-              target={external ? '_blank' : undefined}
-              rel={external ? 'noopener noreferrer' : undefined}
               className="nav-link"
             >
               {label}
