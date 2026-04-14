@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import PromptGrid from '@/components/prompts/PromptGrid'
 import type { Prompt } from '@/lib/types'
 import promptsData from '@/data/prompts.json'
