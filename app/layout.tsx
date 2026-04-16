@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import { LanguageProvider } from '@/lib/LanguageContext'
-
-const inter = Inter({ subsets: ['latin'] })
 
 const SITE_URL = 'https://www.ai-prompts-cafe.com'
 const SITE_NAME = 'AI Prompts Cafe'
@@ -60,7 +57,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
+      <body style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
         <LanguageProvider>
           <Header />
           <main>{children}</main>

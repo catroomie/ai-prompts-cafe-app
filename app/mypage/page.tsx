@@ -7,8 +7,16 @@ import type { Prompt } from '@/lib/types'
 export const metadata: Metadata = { title: 'My page' }
 
 export default async function MypagePage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  let user = null
+  let supabase: any = null
+
+  try {
+    supabase = await createClient()
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch {
+    redirect('/login')
+  }
 
   if (!user) redirect('/login')
 
