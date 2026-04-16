@@ -2,12 +2,6 @@ import PromptGrid from '@/components/prompts/PromptGrid'
 import type { Prompt } from '@/lib/types'
 import promptsData from '@/data/prompts.json'
 
-const SUPABASE_CONFIGURED =
-  process.env.NEXT_PUBLIC_SUPABASE_URL &&
-  process.env.NEXT_PUBLIC_SUPABASE_URL !== 'your_supabase_url' &&
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY !== 'your_supabase_anon_key'
-
 function getJsonPrompts(): Prompt[] {
   return (promptsData as any[]).map((p) => ({
     id: p.id,
@@ -30,6 +24,12 @@ function getJsonPrompts(): Prompt[] {
 export default async function Home() {
   let prompts: Prompt[] = []
   let favoriteIds: string[] = []
+
+  const SUPABASE_CONFIGURED =
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_URL !== 'your_supabase_url' &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY !== 'your_supabase_anon_key'
 
   if (SUPABASE_CONFIGURED) {
     try {
