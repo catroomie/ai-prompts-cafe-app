@@ -2,3 +2,7 @@ name = "ai-prompts-cafe-app"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".open-next/assets"
+
+[vars]
+NEXT_PUBLIC_SUPABASE_URL = "https://hxshgzziobmbqceqcogz.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4c2hnenppb2JtYnFjZXFjb2d6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MzgxODIsImV4cCI6MjA5MTAxNDE4Mn0.3XvQUBUpPeAz-S4O3Zxi02fLnewENPYP9ueU0eHnokA"
