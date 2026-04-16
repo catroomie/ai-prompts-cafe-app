@@ -1,8 +1,7 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
 export default defineCloudflareConfig({
-  dangerous: {
-    disableIncrementalCache: true,
-    disableTagCache: true,
-  },
+  incrementalCache: "dummy",
+  tagCache: "dummy",
+  queue: "direct",
 });
