@@ -3,7 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { savePerson } from "@/lib/storage";
-import { Person, RELATIONSHIPS, Relationship } from "@/lib/types";
+import {
+  BLOOD_TYPES,
+  BloodType,
+  MBTI,
+  MBTI_TYPES,
+  Person,
+  RELATIONSHIPS,
+  Relationship,
+} from "@/lib/types";
 
 export default function PersonForm({ existing }: { existing?: Person }) {
   const router = useRouter();
@@ -15,7 +23,16 @@ export default function PersonForm({ existing }: { existing?: Person }) {
   const [nearestStation, setNearestStation] = useState(
     existing?.nearestStation ?? ""
   );
-  const [likes, setLikes] = useState(existing?.likes ?? "");
+  const [mbti, setMbti] = useState<MBTI | "">(existing?.mbti ?? "");
+  const [bloodType, setBloodType] = useState<BloodType | "">(
+    existing?.bloodType ?? ""
+  );
+  const [favoriteFood, setFavoriteFood] = useState(
+    existing?.favoriteFood ?? ""
+  );
+  const [favoritePlace, setFavoritePlace] = useState(
+    existing?.favoritePlace ?? ""
+  );
   const [notes, setNotes] = useState(existing?.notes ?? "");
 
   function handleSubmit(e: React.FormEvent) {
@@ -29,7 +46,10 @@ export default function PersonForm({ existing }: { existing?: Person }) {
       relationship,
       birthday: birthday.trim() || undefined,
       nearestStation: nearestStation.trim() || undefined,
-      likes: likes.trim() || undefined,
+      mbti: mbti || undefined,
+      bloodType: bloodType || undefined,
+      favoriteFood: favoriteFood.trim() || undefined,
+      favoritePlace: favoritePlace.trim() || undefined,
       notes: notes.trim() || undefined,
       createdAt: existing?.createdAt ?? now,
       updatedAt: now,
@@ -41,9 +61,9 @@ export default function PersonForm({ existing }: { existing?: Person }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-1">名前 *</label>
+        <label className="field-label">名前 *</label>
         <input
-          className="w-full rounded-lg border px-3 py-2 bg-(--card-bg) border-(--border)"
+          className="field-input tap-target"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -52,9 +72,9 @@ export default function PersonForm({ existing }: { existing?: Person }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">関係</label>
+        <label className="field-label">関係</label>
         <select
-          className="w-full rounded-lg border px-3 py-2 bg-(--card-bg) border-(--border)"
+          className="field-input tap-target"
           value={relationship}
           onChange={(e) => setRelationship(e.target.value as Relationship)}
         >
@@ -66,22 +86,20 @@ export default function PersonForm({ existing }: { existing?: Person }) {
         </select>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium mb-1">
-            誕生日（MM-DD）
-          </label>
+          <label className="field-label">誕生日（MM-DD）</label>
           <input
-            className="w-full rounded-lg border px-3 py-2 bg-(--card-bg) border-(--border)"
+            className="field-input tap-target"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
             placeholder="例: 04-15"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">最寄り駅</label>
+          <label className="field-label">最寄り駅</label>
           <input
-            className="w-full rounded-lg border px-3 py-2 bg-(--card-bg) border-(--border)"
+            className="field-input tap-target"
             value={nearestStation}
             onChange={(e) => setNearestStation(e.target.value)}
             placeholder="例: 渋谷駅"
@@ -89,22 +107,63 @@ export default function PersonForm({ existing }: { existing?: Person }) {
         </div>
       </div>
 
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="field-label">MBTI</label>
+          <select
+            className="field-input tap-target"
+            value={mbti}
+            onChange={(e) => setMbti(e.target.value as MBTI | "")}
+          >
+            <option value="">未設定</option>
+            {MBTI_TYPES.map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="field-label">血液型</label>
+          <select
+            className="field-input tap-target"
+            value={bloodType}
+            onChange={(e) => setBloodType(e.target.value as BloodType | "")}
+          >
+            <option value="">未設定</option>
+            {BLOOD_TYPES.map((b) => (
+              <option key={b} value={b}>
+                {b}型
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <div>
-        <label className="block text-sm font-medium mb-1">
-          好きなもの・趣味
-        </label>
+        <label className="field-label">好きな食べ物</label>
         <input
-          className="w-full rounded-lg border px-3 py-2 bg-(--card-bg) border-(--border)"
-          value={likes}
-          onChange={(e) => setLikes(e.target.value)}
-          placeholder="例: 韓国料理、猫、登山"
+          className="field-input tap-target"
+          value={favoriteFood}
+          onChange={(e) => setFavoriteFood(e.target.value)}
+          placeholder="例: 韓国料理、辛いもの"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">メモ</label>
+        <label className="field-label">好きな場所</label>
+        <input
+          className="field-input tap-target"
+          value={favoritePlace}
+          onChange={(e) => setFavoritePlace(e.target.value)}
+          placeholder="例: カフェ、海"
+        />
+      </div>
+
+      <div>
+        <label className="field-label">メモ</label>
         <textarea
-          className="w-full rounded-lg border px-3 py-2 bg-(--card-bg) border-(--border)"
+          className="field-input"
           rows={3}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
@@ -114,7 +173,7 @@ export default function PersonForm({ existing }: { existing?: Person }) {
 
       <button
         type="submit"
-        className="w-full rounded-lg bg-(--accent) text-white py-2.5 font-medium hover:bg-(--accent-hover) transition"
+        className="tap-target w-full rounded-xl bg-(--accent) text-white py-3 font-medium active:scale-[0.99] transition"
       >
         保存する
       </button>

@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <div className="min-h-screen max-w-2xl mx-auto px-4 py-6">
+        <div className="min-h-screen max-w-2xl mx-auto px-4 pt-6 pb-28">
           {children}
         </div>
       </body>

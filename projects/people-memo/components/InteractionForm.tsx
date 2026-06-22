@@ -45,7 +45,7 @@ export default function InteractionForm({
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full rounded-lg border border-dashed border-(--border) py-2.5 text-sm text-(--subtext) hover:border-(--accent) hover:text-(--accent) transition"
+        className="tap-target w-full rounded-xl border border-dashed border-(--border) py-3 text-sm text-(--subtext) active:border-(--accent) active:text-(--accent) transition"
       >
         + 会った記録を追加
       </button>
@@ -55,22 +55,22 @@ export default function InteractionForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-3 rounded-lg border border-(--border) p-4 bg-(--card-bg)"
+      className="space-y-3 rounded-xl border border-(--border) p-4 bg-(--card-bg)"
     >
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium mb-1">会った日</label>
+          <label className="field-label">会った日</label>
           <input
             type="date"
-            className="w-full rounded-lg border px-2 py-1.5 text-sm bg-(--card-bg) border-(--border)"
+            className="field-input tap-target"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
         <div>
-          <label className="block text-xs font-medium mb-1">場所</label>
+          <label className="field-label">場所</label>
           <input
-            className="w-full rounded-lg border px-2 py-1.5 text-sm bg-(--card-bg) border-(--border)"
+            className="field-input tap-target"
             value={place}
             onChange={(e) => setPlace(e.target.value)}
             placeholder="例: カフェ"
@@ -78,45 +78,42 @@ export default function InteractionForm({
         </div>
       </div>
       <div>
-        <label className="block text-xs font-medium mb-1">話した内容</label>
+        <label className="field-label">話した内容</label>
         <textarea
-          className="w-full rounded-lg border px-2 py-1.5 text-sm bg-(--card-bg) border-(--border)"
+          className="field-input"
           rows={2}
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
         />
       </div>
       <div>
-        <label className="block text-xs font-medium mb-1">
-          次回話したいこと
-        </label>
+        <label className="field-label">次に聞きたいこと</label>
         <input
-          className="w-full rounded-lg border px-2 py-1.5 text-sm bg-(--card-bg) border-(--border)"
+          className="field-input tap-target"
           value={nextTopic}
           onChange={(e) => setNextTopic(e.target.value)}
         />
       </div>
       <div>
-        <label className="block text-xs font-medium mb-1">
-          渡したもの・もらったもの
-        </label>
+        <label className="field-label">プレゼント・差し入れ</label>
         <input
-          className="w-full rounded-lg border px-2 py-1.5 text-sm bg-(--card-bg) border-(--border)"
+          className="field-input tap-target"
           value={gift}
           onChange={(e) => setGift(e.target.value)}
+          placeholder="渡したもの・もらったもの"
         />
       </div>
       <div className="flex gap-2">
         <button
           type="submit"
-          className="flex-1 rounded-lg bg-(--accent) text-white py-2 text-sm font-medium hover:bg-(--accent-hover) transition"
+          className="tap-target flex-1 rounded-xl bg-(--accent) text-white text-sm font-medium active:scale-[0.99] transition"
         >
           記録する
         </button>
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="rounded-lg border border-(--border) px-4 py-2 text-sm"
+          className="tap-target rounded-xl border border-(--border) px-4 text-sm"
         >
           キャンセル
         </button>

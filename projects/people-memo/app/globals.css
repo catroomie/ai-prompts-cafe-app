@@ -35,3 +35,23 @@ body {
   font-family: "Inter", "Noto Sans JP", sans-serif;
   color-scheme: light dark;
 }
+
+/* iOSはinputのfont-sizeが16px未満だとフォーカス時に自動ズームするため、
+   フォーム部品は最低16px(text-base)を強制する */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+@layer components {
+  .field-label {
+    @apply block text-sm font-medium mb-1.5;
+  }
+  .field-input {
+    @apply w-full rounded-xl border px-3.5 py-3 bg-(--card-bg) border-(--border) outline-none focus:border-(--accent) transition;
+  }
+  .tap-target {
+    @apply min-h-11;
+  }
+}

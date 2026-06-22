@@ -56,6 +56,22 @@ export function getInteractions(personId: string): Interaction[] {
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
+export function getAllInteractions(): Interaction[] {
+  return read<Interaction>(INTERACTIONS_KEY);
+}
+
+// person.id ごとの最新の会った記録（無ければキーなし）
+export function getLatestInteractionMap(): Record<string, Interaction> {
+  const map: Record<string, Interaction> = {};
+  for (const interaction of getAllInteractions()) {
+    const current = map[interaction.personId];
+    if (!current || interaction.date > current.date) {
+      map[interaction.personId] = interaction;
+    }
+  }
+  return map;
+}
+
 export function saveInteraction(interaction: Interaction) {
   const interactions = read<Interaction>(INTERACTIONS_KEY);
   const idx = interactions.findIndex((i) => i.id === interaction.id);

@@ -19,7 +19,10 @@ export default function EditPersonPage() {
   if (person === null) {
     return (
       <div className="space-y-4">
-        <Link href="/" className="text-sm text-(--subtext)">
+        <Link
+          href="/"
+          className="tap-target inline-flex items-center text-sm text-(--subtext)"
+        >
           ← 戻る
         </Link>
         <p>見つかりませんでした。</p>
@@ -29,7 +32,10 @@ export default function EditPersonPage() {
 
   return (
     <div className="space-y-4">
-      <Link href={`/people/${id}`} className="text-sm text-(--subtext)">
+      <Link
+        href={`/people/${id}`}
+        className="tap-target inline-flex items-center text-sm text-(--subtext)"
+      >
         ← 戻る
       </Link>
       <h1 className="text-xl font-semibold">編集</h1>

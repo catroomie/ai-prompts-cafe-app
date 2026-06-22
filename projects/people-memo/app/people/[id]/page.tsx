@@ -47,9 +47,22 @@ export default function PersonDetailPage() {
     router.push("/");
   }
 
+  const infoRows: { label: string; value: string | undefined }[] = [
+    { label: "誕生日", value: person.birthday },
+    { label: "最寄り駅", value: person.nearestStation },
+    { label: "MBTI", value: person.mbti },
+    { label: "血液型", value: person.bloodType && `${person.bloodType}型` },
+    { label: "好きな食べ物", value: person.favoriteFood },
+    { label: "好きな場所", value: person.favoritePlace },
+    { label: "メモ", value: person.notes },
+  ].filter((row) => row.value);
+
   return (
     <div className="space-y-5">
-      <Link href="/" className="text-sm text-(--subtext)">
+      <Link
+        href="/"
+        className="tap-target inline-flex items-center text-sm text-(--subtext)"
+      >
         ← 戻る
       </Link>
 
@@ -60,53 +73,32 @@ export default function PersonDetailPage() {
             {person.relationship}
           </span>
         </div>
-        <div className="flex gap-2 text-sm">
+        <div className="flex gap-4 text-sm">
           <Link
             href={`/people/${id}/edit`}
-            className="text-(--accent) hover:underline"
+            className="tap-target flex items-center text-(--accent)"
           >
             編集
           </Link>
           <button
             onClick={handleDeletePerson}
-            className="text-red-500 hover:underline"
+            className="tap-target flex items-center text-red-500"
           >
             削除
           </button>
         </div>
       </div>
 
-      <div className="rounded-lg border border-(--border) bg-(--card-bg) p-4 space-y-2 text-sm">
-        {person.birthday && (
-          <div>
-            <span className="text-(--subtext)">誕生日：</span>
-            {person.birthday}
-          </div>
+      <div className="rounded-xl border border-(--border) bg-(--card-bg) p-4 space-y-2 text-sm">
+        {infoRows.length === 0 && (
+          <p className="text-(--subtext)">登録された情報はまだありません。</p>
         )}
-        {person.nearestStation && (
-          <div>
-            <span className="text-(--subtext)">最寄り駅：</span>
-            {person.nearestStation}
+        {infoRows.map((row) => (
+          <div key={row.label}>
+            <span className="text-(--subtext)">{row.label}：</span>
+            {row.value}
           </div>
-        )}
-        {person.likes && (
-          <div>
-            <span className="text-(--subtext)">好きなもの：</span>
-            {person.likes}
-          </div>
-        )}
-        {person.notes && (
-          <div>
-            <span className="text-(--subtext)">メモ：</span>
-            {person.notes}
-          </div>
-        )}
-        {!person.birthday &&
-          !person.nearestStation &&
-          !person.likes &&
-          !person.notes && (
-            <p className="text-(--subtext)">登録された情報はまだありません。</p>
-          )}
+        ))}
       </div>
 
       <div className="space-y-3">
@@ -117,7 +109,7 @@ export default function PersonDetailPage() {
           {interactions.map((i) => (
             <div
               key={i.id}
-              className="rounded-lg border border-(--border) bg-(--card-bg) p-3 text-sm space-y-1"
+              className="rounded-xl border border-(--border) bg-(--card-bg) p-3.5 text-sm space-y-1"
             >
               <div className="flex items-center justify-between">
                 <span className="font-medium">{i.date}</span>
@@ -126,7 +118,7 @@ export default function PersonDetailPage() {
                     deleteInteraction(i.id);
                     reload();
                   }}
-                  className="text-xs text-red-500 hover:underline"
+                  className="tap-target text-xs text-red-500"
                 >
                   削除
                 </button>
@@ -145,7 +137,7 @@ export default function PersonDetailPage() {
               )}
               {i.nextTopic && (
                 <div>
-                  <span className="text-(--subtext)">次回話したいこと：</span>
+                  <span className="text-(--subtext)">次に聞きたいこと：</span>
                   {i.nextTopic}
                 </div>
               )}
