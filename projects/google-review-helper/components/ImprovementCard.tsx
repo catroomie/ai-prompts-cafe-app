@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy, Megaphone, TriangleAlert } from "lucide-react";
+import { actionLabel, estimateOpportunityLoss } from "@/lib/improvementAnalyzer";
 import { generateSnsPost } from "@/lib/snsGenerator";
 import { ImprovementSuggestion } from "@/lib/types";
 
@@ -30,6 +31,7 @@ export default function ImprovementCard({
   const [post, setPost] = useState("");
   const [copied, setCopied] = useState(false);
   const { label, level } = severity(suggestion.count);
+  const loss = estimateOpportunityLoss(suggestion.count);
 
   function handleOpen() {
     setPost(generateSnsPost(suggestion, storeName));
@@ -63,11 +65,31 @@ export default function ImprovementCard({
       </div>
       <p className="leading-relaxed text-(--subtext)">{suggestion.suggestion}</p>
 
+      <div className="flex items-center gap-5 rounded-lg bg-(--bg) px-3 py-2.5">
+        <div>
+          <p className="text-[11px] text-(--subtext)">予約機会損失推定</p>
+          <p className="font-display text-lg text-(--text)">
+            {loss.min}〜{loss.max}件
+          </p>
+        </div>
+        <div>
+          <p className="text-[11px] text-(--subtext)">推奨アクション</p>
+          <p className="text-sm font-semibold text-(--text)">
+            {actionLabel(suggestion.keyword)}
+          </p>
+        </div>
+      </div>
+
       {!open && (
-        <button onClick={handleOpen} className="btn-outline w-full gap-1.5">
-          <Megaphone size={15} />
-          SNS投稿文を作成
-        </button>
+        <div className="space-y-2">
+          <p className="text-xs text-(--subtext)">
+            予約につながるお知らせ文をその場で作成できます
+          </p>
+          <button onClick={handleOpen} className="btn-outline w-full gap-1.5">
+            <Megaphone size={15} />
+            SNS投稿文を作成
+          </button>
+        </div>
       )}
 
       {open && (

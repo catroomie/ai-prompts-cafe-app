@@ -15,6 +15,26 @@ const SUGGESTIONS: Record<ComplaintKeyword, string> = {
   技術: "「仕上がりが気になる」というお声があります。技術の振り返りで満足度を高められます。",
 };
 
+const ACTION_LABELS: Record<ComplaintKeyword, string> = {
+  予約: "ネット予約の導入",
+  電話: "電話対応の見直し",
+  待ち時間: "受付フローの見直し",
+  料金: "料金表の掲示",
+  接客: "接客の振り返り",
+  技術: "技術研修の実施",
+};
+
+export function actionLabel(keyword: ComplaintKeyword): string {
+  return ACTION_LABELS[keyword];
+}
+
+export function estimateOpportunityLoss(count: number): {
+  min: number;
+  max: number;
+} {
+  return { min: count, max: count * 2 };
+}
+
 export function analyzeImprovements(reviews: Review[]): ImprovementSuggestion[] {
   const counts = new Map<ComplaintKeyword, number>(
     COMPLAINT_KEYWORDS.map((k) => [k, 0])

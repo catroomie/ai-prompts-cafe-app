@@ -11,7 +11,12 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import StatCard from "@/components/StatCard";
-import { analyzeImprovements, isThisMonth } from "@/lib/improvementAnalyzer";
+import {
+  actionLabel,
+  analyzeImprovements,
+  estimateOpportunityLoss,
+  isThisMonth,
+} from "@/lib/improvementAnalyzer";
 import { getReviews, getStore } from "@/lib/storage";
 import { Review, Store } from "@/lib/types";
 
@@ -44,7 +49,13 @@ export default function DashboardPage() {
   const thisMonthReviews = reviews.filter((r) =>
     isThisMonth(r.postedAt, new Date())
   );
+  const thisMonthLowRatingCount = thisMonthReviews.filter(
+    (r) => r.rating <= 2
+  ).length;
   const topImprovement = analyzeImprovements(thisMonthReviews)[0];
+  const loss = topImprovement
+    ? estimateOpportunityLoss(topImprovement.count)
+    : null;
 
   return (
     <div className="space-y-5">
@@ -99,15 +110,37 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="card p-5 space-y-2.5">
+      <div className="card p-5 space-y-3">
         <div className="flex items-center gap-2 text-(--text)">
           <TriangleAlert size={17} className="text-(--accent)" />
           <h2 className="text-sm font-semibold">今月の失客リスク</h2>
         </div>
-        {topImprovement ? (
-          <p className="text-sm leading-relaxed text-(--subtext)">
-            {topImprovement.suggestion}
-          </p>
+        {topImprovement && loss ? (
+          <>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-xs text-(--subtext)">低評価口コミ</p>
+                <p className="font-display text-2xl text-(--danger)">
+                  +{thisMonthLowRatingCount}件
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-(--subtext)">予約機会損失推定</p>
+                <p className="font-display text-2xl text-(--danger)">
+                  {loss.min}〜{loss.max}件
+                </p>
+              </div>
+            </div>
+            <div className="rounded-lg bg-(--danger-bg) px-3 py-2.5">
+              <p className="text-xs font-medium text-(--danger)">最優先対応</p>
+              <p className="text-sm font-semibold text-(--text)">
+                {actionLabel(topImprovement.keyword)}
+                <span className="ml-1 font-normal text-(--subtext)">
+                  （「{topImprovement.keyword}」関連 {topImprovement.count}件）
+                </span>
+              </p>
+            </div>
+          </>
         ) : (
           <p className="text-sm text-(--subtext)">
             今月はまだ目立ったリスクがありません。口コミが増えると傾向が見えてきます。
