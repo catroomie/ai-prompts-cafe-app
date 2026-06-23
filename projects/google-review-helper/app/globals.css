@@ -1,43 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #faf8f5;
-  --text: #1a1a1a;
-  --subtext: #6b6b6b;
-  --accent: #e07a3f;
-  --accent-hover: #c8632c;
-  --card-bg: #ffffff;
-  --border: #e8e2da;
-  --tag-bg: #f5efe7;
-  --danger: #d2483a;
-  --danger-bg: #fceeec;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --radius: 14px;
+  --bg: #f8f3ee;
+  --text: #2b2420;
+  --subtext: #948578;
+  --accent: #bd6f56;
+  --accent-hover: #9c5942;
+  --accent-soft: #efddd3;
+  --card-bg: #fffdfb;
+  --border: #e6dad0;
+  --tag-bg: #f1e6dd;
+  --danger: #b8453a;
+  --danger-bg: #f7e8e5;
+  --shadow: 0 1px 3px rgba(43, 36, 32, 0.06);
+  --shadow-hover: 0 8px 20px rgba(43, 36, 32, 0.1);
+  --radius: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #121212;
-    --text: #eeeeee;
-    --subtext: #909090;
-    --accent: #f0935c;
-    --accent-hover: #f5ab7e;
-    --card-bg: #1c1c1c;
-    --border: #2e2e2e;
-    --tag-bg: #262019;
-    --danger: #e8665a;
-    --danger-bg: #2a1715;
+    --bg: #1c1714;
+    --text: #f0e9e3;
+    --subtext: #b3a395;
+    --accent: #d98b6f;
+    --accent-hover: #e4a088;
+    --accent-soft: #3a2a22;
+    --card-bg: #26201c;
+    --border: #3a322b;
+    --tag-bg: #322820;
+    --danger: #e2776a;
+    --danger-bg: #3a2420;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.6);
+    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.5);
   }
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-family: "Hiragino Sans", "Noto Sans JP", "Inter", sans-serif;
   color-scheme: light dark;
+}
+
+h1,
+h2,
+.font-display {
+  font-family: "Shippori Mincho", "Hiragino Mincho ProN", "YuMincho", "Yu Mincho",
+    serif;
+  letter-spacing: 0.02em;
 }
 
 /* iOSはinputのfont-sizeが16px未満だとフォーカス時に自動ズームするため、
@@ -59,6 +69,17 @@ textarea {
     @apply min-h-11;
   }
   .card {
-    @apply rounded-xl border border-(--border) bg-(--card-bg);
+    @apply rounded-2xl border border-(--border) bg-(--card-bg);
+    box-shadow: var(--shadow);
+  }
+  .pill {
+    @apply rounded-full border px-2.5 py-1 text-xs tracking-wide;
+  }
+  .btn-primary {
+    @apply min-h-11 flex items-center justify-center rounded-full bg-(--accent) text-white text-sm font-medium tracking-wide active:scale-[0.99] transition;
+    box-shadow: var(--shadow);
+  }
+  .btn-outline {
+    @apply min-h-11 flex items-center justify-center rounded-full border border-(--border) text-sm tracking-wide transition;
   }
 }

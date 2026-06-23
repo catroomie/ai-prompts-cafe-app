@@ -8,11 +8,11 @@ export default function StatCard({
   emphasis?: boolean;
 }) {
   return (
-    <div className="card p-3.5">
-      <div className="text-xs text-(--subtext)">{label}</div>
+    <div className="card p-4">
+      <div className="text-xs tracking-wide text-(--subtext)">{label}</div>
       <div
-        className={`mt-1 text-2xl font-semibold ${
-          emphasis ? "text-(--danger)" : ""
+        className={`mt-1.5 text-2xl font-display ${
+          emphasis ? "text-(--danger)" : "text-(--text)"
         }`}
       >
         {value}

@@ -21,8 +21,9 @@ export default function ImprovementsPage() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="text-xl font-semibold">改善提案</h1>
+      <div className="space-y-1">
+        <p className="text-xs tracking-[0.2em] text-(--accent)">IMPROVEMENTS</p>
+        <h1 className="text-2xl font-medium">改善提案</h1>
         <p className="text-sm text-(--subtext)">
           口コミに多く登場する言葉から、改善のヒントをまとめました
         </p>

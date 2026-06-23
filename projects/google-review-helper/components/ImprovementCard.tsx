@@ -29,7 +29,7 @@ export default function ImprovementCard({
   return (
     <div className="card p-4 space-y-2.5 text-sm">
       <div className="flex items-center justify-between gap-2">
-        <span className="rounded-full bg-(--tag-bg) px-2.5 py-1 text-xs text-(--subtext)">
+        <span className="pill border-(--border) text-(--subtext)">
           「{suggestion.keyword}」に関する声 {suggestion.count}件
         </span>
       </div>
@@ -38,14 +38,14 @@ export default function ImprovementCard({
       {!open && (
         <button
           onClick={handleOpen}
-          className="tap-target w-full rounded-xl border border-dashed border-(--border) text-sm text-(--accent) active:border-(--accent) transition"
+          className="btn-outline w-full border-(--accent) text-(--accent)"
         >
           SNS投稿文を作成
         </button>
       )}
 
       {open && (
-        <div className="space-y-2.5 rounded-xl border border-(--border) p-3 bg-(--bg)">
+        <div className="space-y-2.5 rounded-2xl border border-(--border) p-3 bg-(--bg)">
           <textarea
             className="field-input whitespace-pre-wrap"
             rows={7}
@@ -53,15 +53,12 @@ export default function ImprovementCard({
             onChange={(e) => setPost(e.target.value)}
           />
           <div className="flex gap-2">
-            <button
-              onClick={handleCopy}
-              className="tap-target flex-1 rounded-xl bg-(--accent) text-white text-sm font-medium active:scale-[0.99] transition"
-            >
+            <button onClick={handleCopy} className="btn-primary flex-1">
               {copied ? "コピーしました" : "コピー"}
             </button>
             <button
               onClick={() => setOpen(false)}
-              className="tap-target rounded-xl border border-(--border) px-4 text-sm"
+              className="btn-outline px-4"
             >
               閉じる
             </button>

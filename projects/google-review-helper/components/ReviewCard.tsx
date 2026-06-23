@@ -51,10 +51,10 @@ export default function ReviewCard({
           </div>
         </div>
         <span
-          className={`shrink-0 rounded-full px-2.5 py-1 text-xs ${
+          className={`pill shrink-0 ${
             review.replied
-              ? "bg-(--tag-bg) text-(--subtext)"
-              : "bg-(--danger-bg) text-(--danger)"
+              ? "border-(--border) text-(--subtext)"
+              : "border-(--danger) text-(--danger)"
           }`}
         >
           {review.replied ? "返信済み" : "未返信"}
@@ -72,20 +72,20 @@ export default function ReviewCard({
       {!open && (
         <button
           onClick={handleOpen}
-          className="tap-target w-full rounded-xl border border-dashed border-(--border) text-sm text-(--accent) active:border-(--accent) transition"
+          className="btn-outline w-full border-(--accent) text-(--accent)"
         >
           返信案を作成
         </button>
       )}
 
       {open && (
-        <div className="space-y-2.5 rounded-xl border border-(--border) p-3 bg-(--bg)">
+        <div className="space-y-2.5 rounded-2xl border border-(--border) p-3 bg-(--bg)">
           <div className="flex gap-2">
             {TONES.map((t) => (
               <button
                 key={t}
                 onClick={() => handleToneChange(t)}
-                className={`tap-target flex-1 rounded-lg border text-xs transition ${
+                className={`tap-target flex-1 rounded-full border text-xs tracking-wide transition ${
                   tone === t
                     ? "border-(--accent) bg-(--accent) text-white"
                     : "border-(--border) text-(--subtext)"
@@ -102,16 +102,10 @@ export default function ReviewCard({
             onChange={(e) => setDraft(e.target.value)}
           />
           <div className="flex gap-2">
-            <button
-              onClick={handleCopy}
-              className="tap-target flex-1 rounded-xl border border-(--border) text-sm transition"
-            >
+            <button onClick={handleCopy} className="btn-outline flex-1">
               {copied ? "コピーしました" : "コピー"}
             </button>
-            <button
-              onClick={handleMarkReplied}
-              className="tap-target flex-1 rounded-xl bg-(--accent) text-white text-sm font-medium active:scale-[0.99] transition"
-            >
+            <button onClick={handleMarkReplied} className="btn-primary flex-1">
               返信済みにする
             </button>
           </div>

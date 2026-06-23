@@ -28,8 +28,9 @@ export default function ReviewsPage() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="text-xl font-semibold">口コミ一覧</h1>
+      <div className="space-y-1">
+        <p className="text-xs tracking-[0.2em] text-(--accent)">REVIEWS</p>
+        <h1 className="text-2xl font-medium">口コミ一覧</h1>
         <p className="text-sm text-(--subtext)">
           未返信・低評価の口コミを上に表示しています
         </p>

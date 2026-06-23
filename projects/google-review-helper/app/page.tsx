@@ -31,10 +31,11 @@ export default function DashboardPage() {
   const topImprovement = analyzeImprovements(thisMonthReviews)[0];
 
   return (
-    <div className="space-y-5">
-      <div>
-        <h1 className="text-xl font-semibold">{store.name}</h1>
-        <p className="text-sm text-(--subtext)">口コミ対応アシスト ダッシュボード</p>
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <p className="text-xs tracking-[0.2em] text-(--accent)">SALON DASHBOARD</p>
+        <h1 className="text-2xl font-medium">{store.name}</h1>
+        <p className="text-sm text-(--subtext)">口コミ対応アシスト</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -52,8 +53,8 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="card p-4 space-y-2">
-        <h2 className="text-sm font-medium">今月の改善ポイント</h2>
+      <div className="card p-5 space-y-2">
+        <h2 className="text-sm tracking-wide text-(--accent)">今月の改善ポイント</h2>
         {topImprovement ? (
           <p className="text-sm leading-relaxed text-(--subtext)">
             {topImprovement.suggestion}
@@ -71,10 +72,7 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      <Link
-        href="/reviews"
-        className="tap-target flex w-full items-center justify-center rounded-xl bg-(--accent) text-white text-sm font-medium active:scale-[0.99] transition"
-      >
+      <Link href="/reviews" className="btn-primary w-full">
         口コミ対応が楽になる - 口コミを見る
       </Link>
     </div>
