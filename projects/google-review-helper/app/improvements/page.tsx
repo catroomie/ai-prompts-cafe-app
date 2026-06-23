@@ -23,10 +23,12 @@ export default function ImprovementsPage() {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <p className="text-xs tracking-[0.2em] text-(--accent)">CHURN RISK</p>
-        <h1 className="text-2xl font-medium">失客リスク</h1>
+        <h1 className="flex items-center gap-2 text-xl font-bold">
+          <TriangleAlert size={20} className="text-(--danger)" />
+          失客リスク
+        </h1>
         <p className="text-sm text-(--subtext)">
-          口コミに多く登場する不満から、顧客が離れる前に対策を打てます
+          口コミに多い不満です。お客様が離れる前に対策しましょう。
         </p>
       </div>
 

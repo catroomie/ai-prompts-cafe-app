@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle, Check, Clock, Copy } from "lucide-react";
+import { Check, Copy, PenLine } from "lucide-react";
 import { generateReply } from "@/lib/replyGenerator";
 import { saveReview } from "@/lib/storage";
 import { Review, TONE_LABELS, Tone, TONES } from "@/lib/types";
@@ -43,66 +43,65 @@ export default function ReviewCard({
   }
 
   const isLowRating = review.rating <= 2;
+  const needsAction = !review.replied;
+  const accentBar = isLowRating ? "var(--danger)" : "var(--accent)";
 
   return (
     <div
-      className={`card p-5 space-y-3 text-sm ${
-        isLowRating && !review.replied ? "border-(--danger)" : ""
-      }`}
+      className="card p-4 space-y-3 text-sm overflow-hidden"
+      style={
+        needsAction
+          ? { borderLeft: `3px solid ${accentBar}` }
+          : undefined
+      }
     >
       <div className="flex items-start justify-between gap-2">
         <div className="space-y-1.5">
-          <div className="flex items-center gap-1.5">
-            <Stars rating={review.rating} />
-            {isLowRating && (
-              <AlertTriangle size={14} className="text-(--danger)" />
-            )}
-          </div>
-          <div className="text-(--subtext)">
-            {review.reviewerName} ・ {review.postedAt}
+          <Stars rating={review.rating} />
+          <div className="text-xs text-(--subtext)">
+            {review.reviewerName}　{review.postedAt}
           </div>
         </div>
         <span
-          className={`pill shrink-0 flex items-center gap-1 ${
+          className={`pill shrink-0 ${
             review.replied
-              ? "border-(--border) text-(--subtext)"
-              : "border-(--danger) text-(--danger)"
+              ? "border-(--border) bg-(--tag-bg) text-(--subtext)"
+              : "border-transparent bg-(--danger) text-white"
           }`}
         >
-          {!review.replied && <Clock size={12} />}
           {review.replied ? "返信済み" : "未対応"}
         </span>
       </div>
 
-      <p className="leading-relaxed">{review.text}</p>
+      <p className="leading-relaxed text-(--text)">{review.text}</p>
 
       {review.replied && review.replyText && !open && (
-        <div className="rounded-lg bg-(--tag-bg) p-3 text-xs text-(--subtext)">
-          返信内容：{review.replyText}
+        <div className="rounded-lg border border-(--border) bg-(--tag-bg) p-3 text-xs leading-relaxed text-(--subtext)">
+          <span className="font-medium text-(--text)">返信内容</span>
+          <br />
+          {review.replyText}
         </div>
       )}
 
       {!open && (
-        <button
-          onClick={handleOpen}
-          className="btn-outline w-full gap-1.5 border-(--accent) text-(--accent)"
-        >
-          <Clock size={14} />
+        <button onClick={handleOpen} className="btn-soft w-full gap-1.5">
+          <PenLine size={15} />
           すぐに返信文を作成
         </button>
       )}
 
       {open && (
-        <div className="space-y-2.5 rounded-2xl border border-(--border) p-3 bg-(--bg)">
+        <div className="space-y-2.5 rounded-lg border border-(--border) bg-(--bg) p-3">
+          <p className="text-xs font-medium text-(--subtext)">返信の文体を選ぶ</p>
           <div className="flex gap-2">
             {TONES.map((t) => (
               <button
                 key={t}
                 onClick={() => handleToneChange(t)}
-                className={`tap-target flex-1 rounded-full border text-xs tracking-wide transition ${
+                className={`tap-target flex-1 rounded-lg border text-xs font-medium transition ${
                   tone === t
                     ? "border-(--accent) bg-(--accent) text-white"
-                    : "border-(--border) text-(--subtext)"
+                    : "border-(--border-strong) text-(--subtext)"
                 }`}
               >
                 {TONE_LABELS[t]}
@@ -117,7 +116,7 @@ export default function ReviewCard({
           />
           <div className="flex gap-2">
             <button onClick={handleCopy} className="btn-outline flex-1 gap-1.5">
-              {copied ? <Check size={14} /> : <Copy size={14} />}
+              {copied ? <Check size={15} /> : <Copy size={15} />}
               {copied ? "コピーしました" : "コピー"}
             </button>
             <button onClick={handleMarkReplied} className="btn-primary flex-1">

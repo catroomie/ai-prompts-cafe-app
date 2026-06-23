@@ -29,10 +29,9 @@ export default function ReviewsPage() {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <p className="text-xs tracking-[0.2em] text-(--accent)">REVIEWS</p>
-        <h1 className="text-2xl font-medium">口コミ一覧</h1>
+        <h1 className="text-xl font-bold">口コミ一覧</h1>
         <p className="text-sm text-(--subtext)">
-          対応が必要な口コミを優先表示。素早く返信して失客を防ぎます。
+          未対応・低評価の口コミを上から順に表示しています
         </p>
       </div>
 

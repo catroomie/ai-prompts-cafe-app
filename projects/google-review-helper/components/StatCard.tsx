@@ -13,26 +13,26 @@ export default function StatCard({
 }) {
   return (
     <div
-      className={`card p-5 ${
+      className={`card p-4 ${
         emphasis ? "border-(--danger) bg-(--danger-bg)" : ""
       }`}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         <Icon
-          size={18}
-          strokeWidth={2}
-          className={emphasis ? "text-(--danger)" : "text-(--accent)"}
+          size={15}
+          strokeWidth={2.2}
+          className={emphasis ? "text-(--danger)" : "text-(--subtext)"}
         />
-        <div
-          className={`text-xs tracking-wide ${
+        <span
+          className={`text-xs font-medium ${
             emphasis ? "text-(--danger)" : "text-(--subtext)"
           }`}
         >
           {label}
-        </div>
+        </span>
       </div>
       <div
-        className={`mt-2 text-3xl font-display ${
+        className={`mt-2 font-display text-3xl ${
           emphasis ? "text-(--danger)" : "text-(--text)"
         }`}
       >

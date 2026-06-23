@@ -1,15 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, TriangleAlert } from "lucide-react";
+import { Check, Copy, Megaphone, TriangleAlert } from "lucide-react";
 import { generateSnsPost } from "@/lib/snsGenerator";
 import { ImprovementSuggestion } from "@/lib/types";
 
-function severity(count: number): { label: string; high: boolean } {
-  if (count >= 4) return { label: "リスク高", high: true };
-  if (count >= 2) return { label: "リスク中", high: false };
-  return { label: "リスク低", high: false };
+type Level = "high" | "mid" | "low";
+
+function severity(count: number): { label: string; level: Level } {
+  if (count >= 4) return { label: "リスク高", level: "high" };
+  if (count >= 2) return { label: "リスク中", level: "mid" };
+  return { label: "リスク低", level: "low" };
 }
+
+const LEVEL_PILL: Record<Level, string> = {
+  high: "border-(--danger) bg-(--danger-bg) text-(--danger)",
+  mid: "border-(--warn) bg-(--warn-bg) text-(--warn)",
+  low: "border-(--border) bg-(--tag-bg) text-(--subtext)",
+};
 
 export default function ImprovementCard({
   suggestion,
@@ -21,7 +29,7 @@ export default function ImprovementCard({
   const [open, setOpen] = useState(false);
   const [post, setPost] = useState("");
   const [copied, setCopied] = useState(false);
-  const { label, high } = severity(suggestion.count);
+  const { label, level } = severity(suggestion.count);
 
   function handleOpen() {
     setPost(generateSnsPost(suggestion, storeName));
@@ -35,33 +43,35 @@ export default function ImprovementCard({
   }
 
   return (
-    <div className={`card p-5 space-y-3 text-sm ${high ? "border-(--danger)" : ""}`}>
+    <div
+      className="card p-4 space-y-3 text-sm"
+      style={
+        level === "high"
+          ? { borderLeft: "3px solid var(--danger)" }
+          : undefined
+      }
+    >
       <div className="flex items-center justify-between gap-2">
-        <span className="pill border-(--border) text-(--subtext)">
-          「{suggestion.keyword}」に関する声 {suggestion.count}件
+        <span className="text-sm font-semibold text-(--text)">
+          「{suggestion.keyword}」への声
+          <span className="ml-1.5 text-(--subtext)">{suggestion.count}件</span>
         </span>
-        <span
-          className={`pill flex items-center gap-1 ${
-            high ? "border-(--danger) text-(--danger)" : "border-(--accent) text-(--accent)"
-          }`}
-        >
+        <span className={`pill shrink-0 ${LEVEL_PILL[level]}`}>
           <TriangleAlert size={12} />
           {label}
         </span>
       </div>
-      <p className="leading-relaxed">{suggestion.suggestion}</p>
+      <p className="leading-relaxed text-(--subtext)">{suggestion.suggestion}</p>
 
       {!open && (
-        <button
-          onClick={handleOpen}
-          className="btn-outline w-full border-(--accent) text-(--accent)"
-        >
+        <button onClick={handleOpen} className="btn-outline w-full gap-1.5">
+          <Megaphone size={15} />
           SNS投稿文を作成
         </button>
       )}
 
       {open && (
-        <div className="space-y-2.5 rounded-2xl border border-(--border) p-3 bg-(--bg)">
+        <div className="space-y-2.5 rounded-lg border border-(--border) bg-(--bg) p-3">
           <textarea
             className="field-input whitespace-pre-wrap"
             rows={7}
@@ -70,7 +80,7 @@ export default function ImprovementCard({
           />
           <div className="flex gap-2">
             <button onClick={handleCopy} className="btn-primary flex-1 gap-1.5">
-              {copied ? <Check size={14} /> : <Copy size={14} />}
+              {copied ? <Check size={15} /> : <Copy size={15} />}
               {copied ? "コピーしました" : "コピー"}
             </button>
             <button onClick={() => setOpen(false)} className="btn-outline px-4">

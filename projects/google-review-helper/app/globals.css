@@ -1,54 +1,63 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f8f3ee;
-  --text: #2b2420;
-  --subtext: #948578;
-  --accent: #bd6f56;
-  --accent-hover: #9c5942;
-  --accent-soft: #efddd3;
-  --card-bg: #fffdfb;
-  --border: #e6dad0;
-  --tag-bg: #f1e6dd;
-  --danger: #b8453a;
-  --danger-bg: #f7e8e5;
-  --shadow: 0 1px 3px rgba(43, 36, 32, 0.06);
-  --shadow-hover: 0 8px 20px rgba(43, 36, 32, 0.1);
-  --radius: 16px;
+  --bg: #f5f3f0;
+  --card-bg: #ffffff;
+  --text: #2a2521;
+  --subtext: #8b8278;
+  --muted: #b4aba0;
+  --accent: #b0694e;
+  --accent-hover: #94563e;
+  --accent-soft: #f0dccf;
+  --border: #ece7e1;
+  --border-strong: #ddd5cb;
+  --tag-bg: #f1ece6;
+  --danger: #c8403a;
+  --danger-hover: #ab332e;
+  --danger-bg: #fbeae8;
+  --warn: #b07d24;
+  --warn-bg: #f7efda;
+  --shadow: 0 1px 2px rgba(43, 34, 28, 0.04), 0 4px 14px rgba(43, 34, 28, 0.05);
+  --shadow-lg: 0 8px 24px rgba(43, 34, 28, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1c1714;
-    --text: #f0e9e3;
-    --subtext: #b3a395;
-    --accent: #d98b6f;
-    --accent-hover: #e4a088;
-    --accent-soft: #3a2a22;
-    --card-bg: #26201c;
-    --border: #3a322b;
-    --tag-bg: #322820;
-    --danger: #e2776a;
-    --danger-bg: #3a2420;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.5);
+    --bg: #17140f;
+    --card-bg: #221e19;
+    --text: #efe9e2;
+    --subtext: #a89d8f;
+    --muted: #786d60;
+    --accent: #d18b6f;
+    --accent-hover: #e2a087;
+    --accent-soft: #33261f;
+    --border: #352e27;
+    --border-strong: #443b32;
+    --tag-bg: #2c2520;
+    --danger: #e36a62;
+    --danger-hover: #ec867d;
+    --danger-bg: #38201e;
+    --warn: #d4a24f;
+    --warn-bg: #2f2719;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
   }
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-inter), var(--font-noto-sans-jp), "Hiragino Sans",
+  font-family: var(--font-noto-sans-jp), var(--font-inter), "Hiragino Sans",
     sans-serif;
   color-scheme: light dark;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2,
+/* セリフはサロン名・数値などブランド表現のみに使用 */
 .font-display {
   font-family: var(--font-noto-serif-jp), "Hiragino Mincho ProN", "YuMincho",
     serif;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 /* iOSはinputのfont-sizeが16px未満だとフォーカス時に自動ズームするため、
@@ -64,23 +73,26 @@ textarea {
     @apply block text-sm font-medium mb-1.5;
   }
   .field-input {
-    @apply w-full rounded-xl border px-3.5 py-3 bg-(--card-bg) border-(--border) outline-none focus:border-(--accent) transition;
+    @apply w-full rounded-lg border px-3.5 py-3 bg-(--card-bg) border-(--border-strong) outline-none focus:border-(--accent) transition;
   }
   .tap-target {
     @apply min-h-11;
   }
   .card {
-    @apply rounded-2xl border border-(--border) bg-(--card-bg);
+    @apply rounded-xl border border-(--border) bg-(--card-bg);
     box-shadow: var(--shadow);
   }
   .pill {
-    @apply rounded-full border px-2.5 py-1 text-xs tracking-wide;
+    @apply inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium;
   }
   .btn-primary {
-    @apply min-h-11 flex items-center justify-center rounded-full bg-(--accent) text-white text-sm font-medium tracking-wide active:scale-[0.99] transition;
+    @apply min-h-12 flex items-center justify-center rounded-lg bg-(--accent) text-white text-sm font-semibold active:scale-[0.99] transition;
     box-shadow: var(--shadow);
   }
   .btn-outline {
-    @apply min-h-11 flex items-center justify-center rounded-full border border-(--border) text-sm tracking-wide transition;
+    @apply min-h-11 flex items-center justify-center rounded-lg border border-(--border-strong) text-sm font-medium transition;
+  }
+  .btn-soft {
+    @apply min-h-11 flex items-center justify-center rounded-lg bg-(--accent-soft) text-(--accent) text-sm font-semibold transition active:scale-[0.99];
   }
 }
