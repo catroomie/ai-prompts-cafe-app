@@ -1,0 +1,13 @@
+{
+  "name": "口コミ対応アシスト",
+  "short_name": "口コミ対応",
+  "description": "Googleマップの口コミ対応・改善提案を一目で確認できるデモアプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf8f5",
+  "theme_color": "#e07a3f",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
