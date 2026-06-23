@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AlertTriangle, Check, Clock, Copy } from "lucide-react";
 import { generateReply } from "@/lib/replyGenerator";
 import { saveReview } from "@/lib/storage";
 import { Review, TONE_LABELS, Tone, TONES } from "@/lib/types";
@@ -41,23 +42,35 @@ export default function ReviewCard({
     onSaved();
   }
 
+  const isLowRating = review.rating <= 2;
+
   return (
-    <div className="card p-4 space-y-2.5 text-sm">
+    <div
+      className={`card p-5 space-y-3 text-sm ${
+        isLowRating && !review.replied ? "border-(--danger)" : ""
+      }`}
+    >
       <div className="flex items-start justify-between gap-2">
-        <div className="space-y-1">
-          <Stars rating={review.rating} />
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-1.5">
+            <Stars rating={review.rating} />
+            {isLowRating && (
+              <AlertTriangle size={14} className="text-(--danger)" />
+            )}
+          </div>
           <div className="text-(--subtext)">
             {review.reviewerName} ・ {review.postedAt}
           </div>
         </div>
         <span
-          className={`pill shrink-0 ${
+          className={`pill shrink-0 flex items-center gap-1 ${
             review.replied
               ? "border-(--border) text-(--subtext)"
               : "border-(--danger) text-(--danger)"
           }`}
         >
-          {review.replied ? "返信済み" : "未返信"}
+          {!review.replied && <Clock size={12} />}
+          {review.replied ? "返信済み" : "未対応"}
         </span>
       </div>
 
@@ -72,9 +85,10 @@ export default function ReviewCard({
       {!open && (
         <button
           onClick={handleOpen}
-          className="btn-outline w-full border-(--accent) text-(--accent)"
+          className="btn-outline w-full gap-1.5 border-(--accent) text-(--accent)"
         >
-          返信案を作成
+          <Clock size={14} />
+          すぐに返信文を作成
         </button>
       )}
 
@@ -102,11 +116,12 @@ export default function ReviewCard({
             onChange={(e) => setDraft(e.target.value)}
           />
           <div className="flex gap-2">
-            <button onClick={handleCopy} className="btn-outline flex-1">
+            <button onClick={handleCopy} className="btn-outline flex-1 gap-1.5">
+              {copied ? <Check size={14} /> : <Copy size={14} />}
               {copied ? "コピーしました" : "コピー"}
             </button>
             <button onClick={handleMarkReplied} className="btn-primary flex-1">
-              返信済みにする
+              対応完了にする
             </button>
           </div>
           <button

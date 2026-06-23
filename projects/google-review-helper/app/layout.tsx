@@ -1,10 +1,29 @@
 import type { Metadata, Viewport } from "next";
+import { Inter, Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
 import BottomNav from "@/components/BottomNav";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const notoSansJP = Noto_Sans_JP({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  variable: "--font-noto-sans-jp",
+});
+
+const notoSerifJP = Noto_Serif_JP({
+  weight: ["500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-jp",
+});
+
 export const metadata: Metadata = {
-  title: "口コミ対応アシスト",
-  description: "Googleマップの口コミ対応・改善提案を一目で確認できるデモアプリ",
+  title: "口コミ管理システム",
+  description:
+    "口コミへの返信時間を短縮し、失客リスクを見える化する店舗向け管理システム",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
@@ -15,7 +34,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "口コミアシスト",
+    title: "口コミ管理",
     statusBarStyle: "default",
   },
 };
@@ -30,7 +49,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html
+      lang="ja"
+      className={`${inter.variable} ${notoSansJP.variable} ${notoSerifJP.variable}`}
+    >
       <body>
         <div className="min-h-screen max-w-2xl mx-auto px-4 pt-6 pb-24">
           {children}

@@ -1,7 +1,7 @@
 {
-  "name": "口コミ対応アシスト",
-  "short_name": "口コミ対応",
-  "description": "Googleマップの口コミ対応・改善提案を一目で確認できるデモアプリ",
+  "name": "口コミ管理システム",
+  "short_name": "口コミ管理",
+  "description": "口コミへの返信時間を短縮し、失客リスクを見える化する店舗向け管理システム",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8f3ee",

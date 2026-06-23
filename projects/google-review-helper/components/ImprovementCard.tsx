@@ -1,8 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { Check, Copy, TriangleAlert } from "lucide-react";
 import { generateSnsPost } from "@/lib/snsGenerator";
 import { ImprovementSuggestion } from "@/lib/types";
+
+function severity(count: number): { label: string; high: boolean } {
+  if (count >= 4) return { label: "リスク高", high: true };
+  if (count >= 2) return { label: "リスク中", high: false };
+  return { label: "リスク低", high: false };
+}
 
 export default function ImprovementCard({
   suggestion,
@@ -14,6 +21,7 @@ export default function ImprovementCard({
   const [open, setOpen] = useState(false);
   const [post, setPost] = useState("");
   const [copied, setCopied] = useState(false);
+  const { label, high } = severity(suggestion.count);
 
   function handleOpen() {
     setPost(generateSnsPost(suggestion, storeName));
@@ -27,10 +35,18 @@ export default function ImprovementCard({
   }
 
   return (
-    <div className="card p-4 space-y-2.5 text-sm">
+    <div className={`card p-5 space-y-3 text-sm ${high ? "border-(--danger)" : ""}`}>
       <div className="flex items-center justify-between gap-2">
         <span className="pill border-(--border) text-(--subtext)">
           「{suggestion.keyword}」に関する声 {suggestion.count}件
+        </span>
+        <span
+          className={`pill flex items-center gap-1 ${
+            high ? "border-(--danger) text-(--danger)" : "border-(--accent) text-(--accent)"
+          }`}
+        >
+          <TriangleAlert size={12} />
+          {label}
         </span>
       </div>
       <p className="leading-relaxed">{suggestion.suggestion}</p>
@@ -53,13 +69,11 @@ export default function ImprovementCard({
             onChange={(e) => setPost(e.target.value)}
           />
           <div className="flex gap-2">
-            <button onClick={handleCopy} className="btn-primary flex-1">
+            <button onClick={handleCopy} className="btn-primary flex-1 gap-1.5">
+              {copied ? <Check size={14} /> : <Copy size={14} />}
               {copied ? "コピーしました" : "コピー"}
             </button>
-            <button
-              onClick={() => setOpen(false)}
-              className="btn-outline px-4"
-            >
+            <button onClick={() => setOpen(false)} className="btn-outline px-4">
               閉じる
             </button>
           </div>

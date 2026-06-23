@@ -32,7 +32,7 @@ export default function ReviewsPage() {
         <p className="text-xs tracking-[0.2em] text-(--accent)">REVIEWS</p>
         <h1 className="text-2xl font-medium">口コミ一覧</h1>
         <p className="text-sm text-(--subtext)">
-          未返信・低評価の口コミを上に表示しています
+          対応が必要な口コミを優先表示。素早く返信して失客を防ぎます。
         </p>
       </div>
 
