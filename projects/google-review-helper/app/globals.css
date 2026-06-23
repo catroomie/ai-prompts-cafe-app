@@ -1,42 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f5f3f0;
+  --bg: #f6f7f9;
   --card-bg: #ffffff;
-  --text: #2a2521;
-  --subtext: #8b8278;
-  --muted: #b4aba0;
-  --accent: #b0694e;
-  --accent-hover: #94563e;
-  --accent-soft: #f0dccf;
-  --border: #ece7e1;
-  --border-strong: #ddd5cb;
-  --tag-bg: #f1ece6;
-  --danger: #c8403a;
-  --danger-hover: #ab332e;
-  --danger-bg: #fbeae8;
+  --text: #1f2733;
+  --subtext: #69727e;
+  --muted: #a7afba;
+  --accent: #33425c;
+  --accent-hover: #28344a;
+  --accent-soft: #eaeef4;
+  --border: #e7e9ee;
+  --border-strong: #d4d8df;
+  --tag-bg: #eff1f5;
+  --danger: #d1403a;
+  --danger-hover: #b3332e;
+  --danger-bg: #fceceb;
   --warn: #b07d24;
   --warn-bg: #f7efda;
-  --shadow: 0 1px 2px rgba(43, 34, 28, 0.04), 0 4px 14px rgba(43, 34, 28, 0.05);
-  --shadow-lg: 0 8px 24px rgba(43, 34, 28, 0.1);
+  --shadow: 0 1px 2px rgba(20, 24, 31, 0.04), 0 4px 14px rgba(20, 24, 31, 0.05);
+  --shadow-lg: 0 8px 24px rgba(20, 24, 31, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #17140f;
-    --card-bg: #221e19;
-    --text: #efe9e2;
-    --subtext: #a89d8f;
-    --muted: #786d60;
-    --accent: #d18b6f;
-    --accent-hover: #e2a087;
-    --accent-soft: #33261f;
-    --border: #352e27;
-    --border-strong: #443b32;
-    --tag-bg: #2c2520;
+    --bg: #14171c;
+    --card-bg: #1d2128;
+    --text: #e7eaef;
+    --subtext: #9aa3af;
+    --muted: #6b7480;
+    --accent: #6e87ad;
+    --accent-hover: #88a0c4;
+    --accent-soft: #232a35;
+    --border: #2c323b;
+    --border-strong: #3a414c;
+    --tag-bg: #262b34;
     --danger: #e36a62;
     --danger-hover: #ec867d;
-    --danger-bg: #38201e;
+    --danger-bg: #361f1e;
     --warn: #d4a24f;
     --warn-bg: #2f2719;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.4);

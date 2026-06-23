@@ -39,16 +39,16 @@ export default function ReviewsPage() {
       </div>
 
       {unrepliedCount > 0 && (
-        <div className="card flex items-center justify-between gap-3 border-(--danger) bg-(--danger-bg) p-4">
+        <div className="card flex items-center justify-between gap-3 p-4">
           <div>
-            <p className="text-xs font-medium text-(--danger)">未返信口コミ</p>
+            <p className="text-xs font-medium text-(--subtext)">未返信口コミ</p>
             <p className="font-display text-2xl text-(--danger)">
               {unrepliedCount}件
             </p>
           </div>
           <div className="text-right">
-            <p className="text-xs font-medium text-(--danger)">推定返信時間</p>
-            <p className="font-display text-2xl text-(--danger)">
+            <p className="text-xs font-medium text-(--subtext)">推定返信時間</p>
+            <p className="font-display text-2xl text-(--text)">
               約{unrepliedCount * MINUTES_PER_REPLY}分
             </p>
           </div>

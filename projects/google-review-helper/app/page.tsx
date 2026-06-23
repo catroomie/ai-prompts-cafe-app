@@ -131,8 +131,8 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <div className="rounded-lg bg-(--danger-bg) px-3 py-2.5">
-              <p className="text-xs font-medium text-(--danger)">最優先対応</p>
+            <div className="rounded-lg bg-(--accent-soft) px-3 py-2.5">
+              <p className="text-xs font-medium text-(--accent)">最優先対応</p>
               <p className="text-sm font-semibold text-(--text)">
                 {actionLabel(topImprovement.keyword)}
                 <span className="ml-1 font-normal text-(--subtext)">
