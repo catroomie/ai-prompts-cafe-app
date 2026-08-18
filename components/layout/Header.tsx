@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useLang } from '@/lib/LanguageContext'
 import type { User } from '@supabase/supabase-js'
@@ -35,6 +36,7 @@ export default function Header() {
   const [toast, setToast] = useState<ToastType>(null)
   const [langAnimating, setLangAnimating] = useState(false)
   const supabase = createClient()
+  const pathname = usePathname()
   const tx = t[lang]
 
   useEffect(() => {
@@ -72,6 +74,9 @@ export default function Header() {
     'lang-ja': '🌐 日本語に切り替えました',
   }
   const toastMessage = toast ? toastMessages[toast] : ''
+
+  // simply は全画面のカメラ UI なのでサイトのヘッダーは出さない
+  if (pathname?.startsWith('/simply')) return null
 
   return (
     <>
